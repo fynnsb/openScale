@@ -61,6 +61,8 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -490,6 +492,39 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                         }
                     }
                 }
+            },
+            bottomBar = {
+                NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainerLow) {
+                    mainRoutes.forEach { route ->
+                        val titleResId = Routes.getTitleResourceId(route)
+                        val titleText = if (titleResId != Routes.NO_TITLE_RESOURCE_ID) {
+                            stringResource(id = titleResId)
+                        } else {
+                            route // Fallback to the raw route string if no title resource ID is defined.
+                        }
+                        NavigationBarItem(
+                            selected = currentRoute == route, // Highlights the item if it's the current route.
+                            onClick = {
+                                navController.navigate(route) {
+                                    // Pop up to the start destination of the graph to avoid building up a large back stack.
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        saveState = true // Save the state of popped destinations.
+                                    }
+                                    // Avoid multiple copies of the same destination when reselecting the same item.
+                                    launchSingleTop = true
+                                    // Restore state when reselecting a previously visited item.
+                                    restoreState = true
+                                }
+                            },
+                            label = { Text(titleText) },
+                            icon = { Icon(
+                                imageVector = getIconForRoute(route),
+                                contentDescription = titleText
+                            ) }
+                        )
+                    }
+                }
+
             },
             topBar = {
                 TopAppBar(
