@@ -48,7 +48,7 @@ import com.health.openscale.ui.shared.SharedViewModel
 import com.health.openscale.ui.screen.components.MeasurementChart
 import com.health.openscale.ui.screen.components.provideFilterTopBarAction
 import com.health.openscale.ui.screen.dialog.DeleteConfirmationDialog
-import com.health.openscale.ui.screen.overview.MeasurementValueRow
+import com.health.openscale.ui.screen.history.MeasurementValueRow
 import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.Date
@@ -87,7 +87,7 @@ fun GraphScreen(
         screenContextName = SettingsPreferenceKeys.GRAPH_SCREEN_CONTEXT
     )
 
-    LaunchedEffect(timeFilterAction) {
+    LaunchedEffect(Unit, timeFilterAction) {
         sharedViewModel.setTopBarTitle(context.getString(R.string.route_title_graph))
         sharedViewModel.setTopBarActions(listOfNotNull(timeFilterAction))
     }

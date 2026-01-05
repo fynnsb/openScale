@@ -111,6 +111,7 @@ import com.health.openscale.ui.navigation.Routes.getIconForRoute
 import com.health.openscale.ui.shared.SharedViewModel
 import com.health.openscale.ui.screen.settings.BluetoothViewModel
 import com.health.openscale.ui.screen.graph.GraphScreen
+import com.health.openscale.ui.screen.history.HistoryScreen
 import com.health.openscale.ui.screen.overview.MeasurementDetailScreen
 import com.health.openscale.ui.screen.overview.OverviewScreen
 import com.health.openscale.ui.screen.settings.AboutScreen
@@ -168,9 +169,18 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
     val mainRoutes = listOf(
         Routes.OVERVIEW,
         Routes.GRAPH,
-        Routes.TABLE,
-        Routes.STATISTICS
+        Routes.HISTORY,
+        //Routes.TABLE,
+        //Routes.STATISTICS
     )
+
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val canNavigateBack = currentRoute !in mainRoutes && navController.previousBackStackEntry != null
+
+    LaunchedEffect(currentRoute) {
+        sharedViewModel.setTopBarActions(emptyList())
+    }
 
     // Collect UI states from SharedViewModel
     val topBarTitleFromVM by sharedViewModel.topBarTitle.collectAsState()
@@ -434,11 +444,32 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
         },
         topBar = {
             TopAppBar(
-                title = { Text(
-                    text = topBarTitle,
+                title = {
+                    val title = when (currentRoute) {
+                        Routes.OVERVIEW -> stringResource(R.string.route_title_overview)
+                        Routes.HISTORY -> stringResource(R.string.route_title_history)
+                        Routes.GRAPH -> stringResource(R.string.route_title_graph)
+                        else -> sharedViewModel.topBarTitle.collectAsState().value
+                    }
+                    Text(
+                        text = title.toString(),
+
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 ) },
+                navigationIcon = {
+                    if (canNavigateBack) {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                null
+                            )
+                        }
+                    } else {
+                        // Optional: Hier könntest du ein Logo oder nichts anzeigen
+                        null
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface,
@@ -446,6 +477,7 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                     actionIconContentColor = MaterialTheme.colorScheme.onSurface
                 ),
                 actions = {
+
                     // Display actions defined in SharedViewModel.
                     topBarActions.forEach { action ->
                         val contentDesc = action.contentDescriptionResId?.let { stringResource(id = it) }
@@ -497,7 +529,12 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                             sharedViewModel = sharedViewModel,
                             bluetoothViewModel = bluetoothViewModel
                         )
-
+                    }
+                    composable(Routes.HISTORY) {
+                        HistoryScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel,
+                        )
                     }
                     composable(Routes.GRAPH) {
                         GraphScreen(

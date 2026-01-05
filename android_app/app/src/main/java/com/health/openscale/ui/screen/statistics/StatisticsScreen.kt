@@ -110,7 +110,8 @@ data class MeasurementStatistics(
 fun StatisticsScreen(sharedViewModel: SharedViewModel) {
 
     val timeRangeState by rememberResolvedTimeRangeState(
-        screenContextName = SettingsPreferenceKeys.STATISTICS_SCREEN_CONTEXT,
+        //screenContextName = SettingsPreferenceKeys.STATISTICS_SCREEN_CONTEXT,
+        screenContextName = SettingsPreferenceKeys.OVERVIEW_SCREEN_CONTEXT,
         sharedViewModel = sharedViewModel
     )
 
@@ -122,18 +123,18 @@ fun StatisticsScreen(sharedViewModel: SharedViewModel) {
 
     val allTypes by sharedViewModel.measurementTypes.collectAsState()
 
-    val filterAction = provideFilterTopBarAction(
+    /*val filterAction = provideFilterTopBarAction(
         sharedViewModel = sharedViewModel,
         screenContextName = SettingsPreferenceKeys.STATISTICS_SCREEN_CONTEXT
     )
-    val title = stringResource(R.string.route_title_statistics)
+    val title = stringResource(R.string.route_title_statistics)*/
     val noRelevantTypesMsg = stringResource(R.string.statistics_no_relevant_types)
     val noDataMsg = stringResource(R.string.no_data_available)
 
-    LaunchedEffect(filterAction, title) {
+    /*LaunchedEffect(filterAction, title) {
         sharedViewModel.setTopBarTitle(title)
         sharedViewModel.setTopBarActions(listOfNotNull(filterAction))
-    }
+    }*/
 
     val relevantTypes = remember(allTypes) {
         allTypes.filter { it.isEnabled && (it.inputType == InputFieldType.FLOAT || it.inputType == InputFieldType.INT) }
@@ -187,7 +188,8 @@ fun StatisticsScreen(sharedViewModel: SharedViewModel) {
                                 sharedViewModel = sharedViewModel,
                                 measurementType = type,
                                 statistics = stats,
-                                screenContextForChart = SettingsPreferenceKeys.STATISTICS_SCREEN_CONTEXT
+                                //screenContextForChart = SettingsPreferenceKeys.STATISTICS_SCREEN_CONTEXT
+                                screenContextForChart = SettingsPreferenceKeys.OVERVIEW_SCREEN_CONTEXT
                             )
                         }
                     }
@@ -317,7 +319,7 @@ fun StatisticCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = 6.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(measurementType.color).copy(alpha = 0.08f)
         ),
@@ -340,6 +342,7 @@ fun StatisticCard(
                     val iconMeasurementType = remember(measurementType.icon) { measurementType.icon }
 
                     RoundMeasurementIcon(
+                        size = 22.dp,
                         icon = iconMeasurementType.resource,
                         backgroundTint = Color(measurementType.color).copy(alpha = 0.2f),
                         iconTint = Color(measurementType.color)
@@ -359,7 +362,7 @@ fun StatisticCard(
                 }
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             // --- MIDDLE: LineChart ---
             MeasurementChart(
@@ -371,10 +374,10 @@ fun StatisticCard(
                 showFilterTitle = false,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp) // Fixed height for the chart
+                    .height(90.dp) // Fixed height for the chart
             )
 
-            Spacer(modifier = Modifier.height(16.dp)) // Space after the chart
+            Spacer(modifier = Modifier.height(6.dp)) // Space after the chart
 
             // --- BOTTOM ROW: First Value (left), DIFFERENCE (center, optional), Last Value (right) ---
             Row(

@@ -37,6 +37,9 @@ object Routes {
     const val STATISTICS = "statistics"
     const val SETTINGS = "settings"
 
+    const val HISTORY = "history"
+
+
     const val MEASUREMENT_DETAIL = "measurementDetail" // Not a main navigation item, but a route
 
     // Sub-pages (Settings Subgraph)
@@ -76,6 +79,8 @@ object Routes {
         route.startsWith(TABLE) -> R.string.route_title_table
         route.startsWith(STATISTICS) -> R.string.route_title_statistics
         route.startsWith(SETTINGS) -> R.string.route_title_settings
+        route.startsWith(HISTORY) -> R.string.route_title_history
+
         else -> NO_TITLE_RESOURCE_ID // No specific title for other routes via this function
     }
 
@@ -86,6 +91,7 @@ object Routes {
             TABLE -> Icons.Filled.TableRows
             STATISTICS -> Icons.Filled.Analytics
             SETTINGS -> Icons.Filled.Settings
+            HISTORY -> Icons.Filled.TableRows
             else -> Icons.Filled.QuestionMark // Default icon for routes not explicitly handled
         }
     }
