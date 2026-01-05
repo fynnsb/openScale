@@ -281,8 +281,10 @@ fun MeasurementTypeSettingsScreen(
                 val itemAlpha = if (type.isEnabled) 1f else 0.6f
                 val textColor = if (type.isEnabled) LocalContentColor.current
                 else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
-                val iconBackgroundAlpha = if (type.isEnabled) 1f else 0.7f
-                val iconTintAlpha = if (type.isEnabled) 1f else 0.7f
+                val iconColor = if (type.isEnabled) Color(type.color)
+                else Color.Gray
+                val iconBackgroundAlpha = if (type.isEnabled) 0.2f else 0.2f
+                val iconTintAlpha = if (type.isEnabled) 1f else 0.5f
 
 
                 Card(
@@ -331,8 +333,8 @@ fun MeasurementTypeSettingsScreen(
                         val iconMeasurementType = remember(type.icon) {type.icon }
                         RoundMeasurementIcon(
                             icon = iconMeasurementType.resource,
-                            iconTint = Color.Black.copy(alpha = iconTintAlpha),
-                            backgroundTint = Color(type.color).copy(alpha = iconBackgroundAlpha),
+                            iconTint = iconColor.copy(alpha = iconTintAlpha),
+                            backgroundTint = iconColor.copy(alpha = iconBackgroundAlpha),
                             modifier = Modifier.size(48.dp)
                         )
 

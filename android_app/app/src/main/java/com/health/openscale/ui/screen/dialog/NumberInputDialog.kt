@@ -301,7 +301,8 @@ fun NumberInputDialog(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RoundMeasurementIcon(
                     icon = measurementIcon.resource,
-                    backgroundTint = iconBackgroundColor,
+                    backgroundTint = iconBackgroundColor.copy(alpha = 0.2f),
+                    iconTint = iconBackgroundColor
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(title)

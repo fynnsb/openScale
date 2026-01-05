@@ -17,6 +17,7 @@
  */
 package com.health.openscale.ui.screen.statistics
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -315,7 +317,14 @@ fun StatisticCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
+            .padding(vertical = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(measurementType.color).copy(alpha = 0.08f)
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = Color(measurementType.color).copy(alpha = 0.2f)
+        )
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             // --- TOP ROW: Icon, Name, Min/Max/Avg ---
@@ -332,7 +341,8 @@ fun StatisticCard(
 
                     RoundMeasurementIcon(
                         icon = iconMeasurementType.resource,
-                        backgroundTint = Color(measurementType.color),
+                        backgroundTint = Color(measurementType.color).copy(alpha = 0.2f),
+                        iconTint = Color(measurementType.color)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(

@@ -1425,7 +1425,8 @@ fun MeasurementValueRow(
         ) {
             RoundMeasurementIcon(
                 icon = iconMeasurementType.resource,
-                backgroundTint = Color(type.color)
+                backgroundTint = Color(type.color).copy(alpha = 0.2f),
+                iconTint = Color(type.color)
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column(verticalArrangement = Arrangement.Center) {

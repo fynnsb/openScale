@@ -116,7 +116,8 @@ fun TimeInputDialog(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RoundMeasurementIcon(
                     icon = measurementIcon.resource,
-                    backgroundTint = iconBackgroundColor,
+                    backgroundTint = iconBackgroundColor.copy(alpha = 0.2f),
+                    iconTint = iconBackgroundColor
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(title, style = MaterialTheme.typography.titleMedium)

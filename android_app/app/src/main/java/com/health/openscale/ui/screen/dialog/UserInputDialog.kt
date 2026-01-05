@@ -80,7 +80,8 @@ fun UserInputDialog(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RoundMeasurementIcon(
                     icon = measurementIcon.resource,
-                    backgroundTint = iconBackgroundColor
+                    backgroundTint = iconBackgroundColor.copy(alpha = 0.2f),
+                    iconTint = iconBackgroundColor
                 )
                 Spacer(Modifier.width(12.dp))
                 Text(text = title, style = MaterialTheme.typography.titleMedium)

@@ -223,7 +223,8 @@ fun UserGoalDialog(
                                 selectedTypeState?.let {
                                     RoundMeasurementIcon(
                                         icon = it.icon.resource,
-                                        backgroundTint = Color(it.color),
+                                        backgroundTint = Color(it.color).copy(alpha = 0.2f),
+                                        iconTint = Color(it.color),
                                         size = 16.dp
                                     )
                                 }
@@ -267,7 +268,7 @@ fun UserGoalDialog(
                                     DropdownMenuItem(
                                         text = { Text(type.getDisplayName(context)) },
                                         leadingIcon = {
-                                            RoundMeasurementIcon(icon = type.icon.resource, backgroundTint = Color(type.color), size = 16.dp)
+                                            RoundMeasurementIcon(icon = type.icon.resource, backgroundTint = Color(type.color).copy(alpha = 0.2f), iconTint = Color(type.color), size = 16.dp)
                                         },
                                         onClick = {
                                             if (selectedTypeState?.id != type.id) {

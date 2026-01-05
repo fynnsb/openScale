@@ -48,8 +48,8 @@ fun IconPickerDialog(
                 items(availableIcons) { icon ->
                     RoundMeasurementIcon(
                         icon = icon,
-                        backgroundTint = iconBackgroundColor,
-                        iconTint = iconTintColor,
+                        backgroundTint = iconBackgroundColor.copy(alpha = 0.2f),
+                        iconTint = iconBackgroundColor,
                         size = 28.dp,
                         modifier = Modifier.clickable { onIconSelected(icon) }
                     )
