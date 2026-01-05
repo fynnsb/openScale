@@ -440,10 +440,10 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                     overflow = TextOverflow.Ellipsis
                 ) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Black,
-                    titleContentColor = White,
-                    navigationIconContentColor = White,
-                    actionIconContentColor = White
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                    actionIconContentColor = MaterialTheme.colorScheme.onSurface
                 ),
                 actions = {
                     // Display actions defined in SharedViewModel.
