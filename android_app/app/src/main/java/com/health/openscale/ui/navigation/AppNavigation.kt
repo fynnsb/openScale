@@ -176,8 +176,7 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
         Routes.OVERVIEW,
         Routes.GRAPH,
         Routes.TABLE,
-        Routes.STATISTICS,
-        Routes.SETTINGS
+        Routes.STATISTICS
     )
 
     // Collect UI states from SharedViewModel
@@ -381,119 +380,30 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
         )
     }
 
-
-
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet(
-                drawerContainerColor = Black, // Custom drawer background color
-                drawerContentColor = White    // Custom drawer content color for icons and text
-            ) {
-                // Drawer Header: Displays the app logo and name.
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(topEnd = 24.dp)) // Specific rounding for visual style
-                        .background(Blue) // Themed background for the header
-                        .padding(8.dp)
-                        .fillMaxWidth()
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+                // Custom Snackbar appearance defined here.
+                Snackbar(
+                    modifier = Modifier.padding(8.dp), // Padding around the snackbar.
+                    shape = RoundedCornerShape(8.dp), // Rounded corners for the snackbar.
+                    containerColor = Blue, // Custom background color.
+                    contentColor = White,    // Custom text and icon color.
                 ) {
-                    Image(
-                        painter = if (BuildConfig.BUILD_TYPE == "beta" || BuildConfig.BUILD_TYPE == "oss") painterResource(
-                            id = R.drawable.ic_launcher_beta_foreground
-                        ) else painterResource(id = R.drawable.ic_launcher_foreground),
-                        contentDescription = stringResource(R.string.app_logo_content_description),
-                        modifier = Modifier.size(64.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
-                Spacer(modifier = Modifier.height(8.dp)) // Spacing after the header
-
-                // Drawer Items: Dynamically created for each main route.
-                LazyColumn() {
-                    items(mainRoutes, key = {it}) { route ->
-                        // Add a divider before the "Settings" item for visual separation.
-                        if (route == Routes.SETTINGS) {
-                            HorizontalDivider(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                            )
-                        }
-
-                        val titleResId = Routes.getTitleResourceId(route)
-                        val titleText = if (titleResId != Routes.NO_TITLE_RESOURCE_ID) {
-                            stringResource(id = titleResId)
-                        } else {
-                            route // Fallback to the raw route string if no title resource ID is defined.
-                        }
-
-                        NavigationDrawerItem(
-                            icon = {
-                                Icon(
-                                    imageVector = getIconForRoute(route),
-                                    contentDescription = titleText // Provides accessibility for the icon.
-                                )
-                            },
-                            label = { Text(titleText) },
-                            selected = currentRoute == route, // Highlights the item if it's the current route.
-                            onClick = {
-                                navController.navigate(route) {
-                                    // Pop up to the start destination of the graph to avoid building up a large back stack.
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true // Save the state of popped destinations.
-                                    }
-                                    // Avoid multiple copies of the same destination when reselecting the same item.
-                                    launchSingleTop = true
-                                    // Restore state when reselecting a previously visited item.
-                                    restoreState = true
-                                }
-                                scope.launch { drawerState.close() } // Close the drawer after selection.
-                            },
-                            colors = NavigationDrawerItemDefaults.colors(
-                                // Custom colors for selected and unselected drawer items.
-                                selectedIconColor = Blue,
-                                selectedTextColor = Blue,
-                                selectedContainerColor = Color.Transparent, // No background for the selected item itself.
-
-                                unselectedIconColor = White,
-                                unselectedTextColor = White,
-                                unselectedContainerColor = Color.Transparent
-                            )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = stringResource(R.string.app_logo_content_description), // Accessibility.
+                            tint = LocalContentColor.current // Uses the contentColor from Snackbar.
                         )
+                        Spacer(Modifier.width(8.dp))
+                        Text(snackbarData.visuals.message)
                     }
                 }
             }
-        }
-    ) {
-        Scaffold(
-            snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState) { snackbarData ->
-                    // Custom Snackbar appearance defined here.
-                    Snackbar(
-                        modifier = Modifier.padding(8.dp), // Padding around the snackbar.
-                        shape = RoundedCornerShape(8.dp), // Rounded corners for the snackbar.
-                        containerColor = Blue, // Custom background color.
-                        contentColor = White,    // Custom text and icon color.
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Filled.Info,
-                                contentDescription = stringResource(R.string.app_logo_content_description), // Accessibility.
-                                tint = LocalContentColor.current // Uses the contentColor from Snackbar.
-                            )
-                            Spacer(Modifier.width(8.dp))
-                            Text(snackbarData.visuals.message)
-                        }
-                    }
-                }
-            },
-            bottomBar = {
+        },
+        bottomBar = {
+            if (currentRoute in mainRoutes) {
                 NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainerLow) {
                     mainRoutes.forEach { route ->
                         val titleResId = Routes.getTitleResourceId(route)
@@ -508,7 +418,8 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                                 navController.navigate(route) {
                                     // Pop up to the start destination of the graph to avoid building up a large back stack.
                                     popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true // Save the state of popped destinations.
+                                        saveState =
+                                            true // Save the state of popped destinations.
                                     }
                                     // Avoid multiple copies of the same destination when reselecting the same item.
                                     launchSingleTop = true
@@ -517,249 +428,237 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                                 }
                             },
                             label = { Text(titleText) },
-                            icon = { Icon(
-                                imageVector = getIconForRoute(route),
-                                contentDescription = titleText
-                            ) }
+                            icon = {
+                                Icon(
+                                    imageVector = getIconForRoute(route),
+                                    contentDescription = titleText
+                                )
+                            }
                         )
                     }
                 }
+            }
 
-            },
-            topBar = {
-                TopAppBar(
-                    title = { Text(
-                        text = topBarTitle,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    ) },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Black,
-                        titleContentColor = White,
-                        navigationIconContentColor = White,
-                        actionIconContentColor = White
-                    ),
-                    navigationIcon = {
-                        if (currentRoute in mainRoutes) {
-                            // Show menu icon for main routes to open the drawer.
-                            IconButton(onClick = {
-                                scope.launch { drawerState.open() }
-                            }) {
-                                Icon(
-                                    Icons.Default.Menu,
-                                    contentDescription = stringResource(R.string.content_desc_open_menu)
-                                )
-                            }
-                        } else {
-                            // Show back arrow for non-main (detail or sub-page) routes.
-                            IconButton(onClick = {
-                                navController.popBackStack()
-                            }) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.ArrowBack,
-                                    contentDescription = stringResource(R.string.content_desc_back)
-                                )
-                            }
+        },
+        topBar = {
+            TopAppBar(
+                title = { Text(
+                    text = topBarTitle,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                ) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Black,
+                    titleContentColor = White,
+                    navigationIconContentColor = White,
+                    actionIconContentColor = White
+                ),
+                actions = {
+                    // Display actions defined in SharedViewModel.
+                    topBarActions.forEach { action ->
+                        val contentDesc = action.contentDescriptionResId?.let { stringResource(id = it) }
+                            ?: action.contentDescription
+                        IconButton(onClick = action.onClick) {
+                            Icon(imageVector = action.icon, contentDescription = contentDesc)
                         }
-                    },
-                    actions = {
-                        // Display actions defined in SharedViewModel.
-                        topBarActions.forEach { action ->
-                            val contentDesc = action.contentDescriptionResId?.let { stringResource(id = it) }
-                                ?: action.contentDescription
-                            IconButton(onClick = action.onClick) {
-                                Icon(imageVector = action.icon, contentDescription = contentDesc)
-                            }
-                            // If the action has associated dropdown content, invoke it here.
-                            // This allows TopAppBar actions to also host DropdownMenus.
-                            action.dropdownContent?.invoke()
-                        }
+                        // If the action has associated dropdown content, invoke it here.
+                        // This allows TopAppBar actions to also host DropdownMenus.
+                        action.dropdownContent?.invoke()
+                    }
 
-                        // Show user switcher dropdown if on a main route and users exist.
-                        if (!isInContextualSelectionMode && currentRoute in mainRoutes && allUsers.isNotEmpty() && currentRoute != Routes.SETTINGS) {
-                            UserDropdownAsAction(
-                                users = allUsers,
-                                selectedUser = selectedUser,
-                                onUserSelected = { userId ->
-                                    sharedViewModel.selectUser(userId)
-                                    // Consider closing the drawer if open, or other UI updates.
-                                },
-                                onManageUsersClicked = {
-                                    navController.navigate(Routes.USER_SETTINGS)
-                                    // Consider closing the drawer if open.
-                                }
+                    // Show user switcher dropdown if on a main route and users exist.
+                    if (!isInContextualSelectionMode && currentRoute in mainRoutes && allUsers.isNotEmpty() && currentRoute != Routes.SETTINGS) {
+                        UserDropdownAsAction(
+                            users = allUsers,
+                            selectedUser = selectedUser,
+                            onUserSelected = { userId ->
+                                sharedViewModel.selectUser(userId)
+                                // Consider closing the drawer if open, or other UI updates.
+                            },
+                            onManageUsersClicked = {
+                                navController.navigate(Routes.USER_SETTINGS)
+                                // Consider closing the drawer if open.
+                            }
+                        )
+                    }
+                    if (currentRoute in mainRoutes && currentRoute != Routes.SETTINGS) {
+                        IconButton(onClick = { navController.navigate(Routes.SETTINGS) }) {
+                            Icon(
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = stringResource(R.string.route_title_settings)
                             )
                         }
                     }
-                )
-            }
-        ) { innerPadding ->
-            Column(modifier = Modifier.fillMaxSize()) {
-                NavHost(
-                    navController = navController,
-                    startDestination = Routes.OVERVIEW,
-                    modifier = Modifier
-                        .padding(innerPadding) // Apply padding from Scaffold.
-                        .weight(1f)      // NavHost takes the remaining space in the Column.
-                ) {
-                    // Define all composable screens for navigation routes.
-                    composable(Routes.OVERVIEW) {
-                        OverviewScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel,
-                            bluetoothViewModel = bluetoothViewModel
-                        )
-                    }
-                    composable(Routes.GRAPH) {
-                        GraphScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel
-                        )
-                    }
-                    composable(Routes.TABLE) {
-                        TableScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel
-                        )
-                    }
-                    composable(Routes.STATISTICS) {
-                        StatisticsScreen(sharedViewModel)
-                    }
-                    composable(Routes.SETTINGS) {
-                        SettingsScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel,
-                            settingsViewModel = settingsViewModel
-                        )
-                    }
-                    composable(Routes.GENERAL_SETTINGS) {
-                        GeneralSettingsScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel,
-                            settingsViewModel = settingsViewModel
-                        )
-                    }
-                    composable(Routes.USER_SETTINGS) {
-                        UserSettingsScreen(
-                            sharedViewModel = sharedViewModel,
-                            settingsViewModel = settingsViewModel,
-                            onEditUser = { userId ->
-                                navController.navigate(Routes.userDetail(userId))
-                            }
-                        )
-                    }
-                    composable(
-                        route = "${Routes.USER_DETAIL}?id={id}", // Argument in route pattern
-                        arguments = listOf(navArgument("id") {
-                            type = NavType.IntType
-                            defaultValue = -1 // Indicates a new user if ID is -1 (or not passed)
-                        })
-                    ) { backStackEntry ->
-                        val userId = backStackEntry.arguments?.getInt("id") ?: -1
-                        UserDetailScreen(
-                            navController = navController,
-                            userId = userId,
-                            sharedViewModel = sharedViewModel,
-                            settingsViewModel = settingsViewModel
-                        )
-                    }
-                    composable(Routes.MEASUREMENT_TYPES) {
-                        MeasurementTypeSettingsScreen(
-                            sharedViewModel = sharedViewModel,
-                            settingsViewModel = settingsViewModel,
-                            onEditType = { typeId ->
-                                navController.navigate(Routes.measurementTypeDetail(typeId))
-                            }
-                        )
-                    }
-                    composable(
-                        route = "${Routes.MEASUREMENT_DETAIL}?measurementId={measurementId}&userId={userId}",
-                        arguments = listOf(
-                            navArgument("measurementId") {
-                                type = NavType.IntType
-                                defaultValue = -1 // Default if not provided
-                            },
-                            navArgument("userId") {
-                                type = NavType.IntType
-                                defaultValue = -1 // Default if not provided, might also fetch from selectedUser if appropriate
-                            }
-                        )
-                    ) { backStackEntry ->
-                        val measurementId = backStackEntry.arguments?.getInt("measurementId") ?: -1
-                        val userId = backStackEntry.arguments?.getInt("userId") ?: -1
-                        MeasurementDetailScreen(
-                            navController = navController,
-                            measurementId = measurementId,
-                            userId = userId,
-                            sharedViewModel = sharedViewModel
-                        )
-                    }
-                    composable(
-                        route = "${Routes.MEASUREMENT_TYPE_DETAIL}?id={id}",
-                        arguments = listOf(navArgument("id") {
-                            type = NavType.IntType
-                            defaultValue = -1 // Indicates a new type if ID is -1
-                        })
-                    ) { backStackEntry ->
-                        val typeId = backStackEntry.arguments?.getInt("id") ?: -1
-                        MeasurementTypeDetailScreen(
-                            navController = navController,
-                            typeId = typeId,
-                            sharedViewModel = sharedViewModel,
-                            settingsViewModel = settingsViewModel
-                        )
-                    }
-                    composable(Routes.BLUETOOTH_SETTINGS) {
-                        BluetoothScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel,
-                            bluetoothViewModel = bluetoothViewModel
-                        )
-                    }
-                    composable(Routes.BLUETOOTH_DETAIL) {
-                        BluetoothDetailScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel,
-                            bluetoothViewModel = bluetoothViewModel
-                        )
-                    }
-                    composable(Routes.CHART_SETTINGS) {
-                        ChartSettingsScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel,
-                            settingsViewModel = settingsViewModel
-                        )
-                    }
-                    composable(Routes.DATA_MANAGEMENT_SETTINGS) {
-                        DataManagementSettingsScreen(
-                            navController = navController,
-                            settingsViewModel = settingsViewModel
-                        )
-                    }
-                    composable(Routes.ABOUT_SETTINGS) {
-                        AboutScreen(
-                            navController = navController,
-                            sharedViewModel = sharedViewModel
-                        )
-                    }
                 }
-                // Box to fill the space behind the system navigation bar, if visible.
-                // This prevents UI elements from being drawn under a translucent navigation bar,
-                // ensuring consistent background color.
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(
-                            WindowInsets.navigationBars // Get insets for the system navigation bar.
-                                .asPaddingValues()
-                                .calculateBottomPadding() // Calculate its height.
-                        )
-                        .background(Black) // Match TopAppBar color or general theme background.
-                )
+            )
+        }
+    ) { innerPadding ->
+        Column(modifier = Modifier.fillMaxSize()) {
+            NavHost(
+                navController = navController,
+                startDestination = Routes.OVERVIEW,
+                modifier = Modifier
+                    .padding(innerPadding) // Apply padding from Scaffold.
+                    .weight(1f)      // NavHost takes the remaining space in the Column.
+            ) {
+                // Define all composable screens for navigation routes.
+                composable(Routes.OVERVIEW) {
+                    OverviewScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel,
+                        bluetoothViewModel = bluetoothViewModel
+                    )
+                }
+                composable(Routes.GRAPH) {
+                    GraphScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel
+                    )
+                }
+                composable(Routes.TABLE) {
+                    TableScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel
+                    )
+                }
+                composable(Routes.STATISTICS) {
+                    StatisticsScreen(sharedViewModel)
+                }
+                composable(Routes.SETTINGS) {
+                    SettingsScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel,
+                        settingsViewModel = settingsViewModel
+                    )
+                }
+                composable(Routes.GENERAL_SETTINGS) {
+                    GeneralSettingsScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel,
+                        settingsViewModel = settingsViewModel
+                    )
+                }
+                composable(Routes.USER_SETTINGS) {
+                    UserSettingsScreen(
+                        sharedViewModel = sharedViewModel,
+                        settingsViewModel = settingsViewModel,
+                        onEditUser = { userId ->
+                            navController.navigate(Routes.userDetail(userId))
+                        }
+                    )
+                }
+                composable(
+                    route = "${Routes.USER_DETAIL}?id={id}", // Argument in route pattern
+                    arguments = listOf(navArgument("id") {
+                        type = NavType.IntType
+                        defaultValue = -1 // Indicates a new user if ID is -1 (or not passed)
+                    })
+                ) { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getInt("id") ?: -1
+                    UserDetailScreen(
+                        navController = navController,
+                        userId = userId,
+                        sharedViewModel = sharedViewModel,
+                        settingsViewModel = settingsViewModel
+                    )
+                }
+                composable(Routes.MEASUREMENT_TYPES) {
+                    MeasurementTypeSettingsScreen(
+                        sharedViewModel = sharedViewModel,
+                        settingsViewModel = settingsViewModel,
+                        onEditType = { typeId ->
+                            navController.navigate(Routes.measurementTypeDetail(typeId))
+                        }
+                    )
+                }
+                composable(
+                    route = "${Routes.MEASUREMENT_DETAIL}?measurementId={measurementId}&userId={userId}",
+                    arguments = listOf(
+                        navArgument("measurementId") {
+                            type = NavType.IntType
+                            defaultValue = -1 // Default if not provided
+                        },
+                        navArgument("userId") {
+                            type = NavType.IntType
+                            defaultValue = -1 // Default if not provided, might also fetch from selectedUser if appropriate
+                        }
+                    )
+                ) { backStackEntry ->
+                    val measurementId = backStackEntry.arguments?.getInt("measurementId") ?: -1
+                    val userId = backStackEntry.arguments?.getInt("userId") ?: -1
+                    MeasurementDetailScreen(
+                        navController = navController,
+                        measurementId = measurementId,
+                        userId = userId,
+                        sharedViewModel = sharedViewModel
+                    )
+                }
+                composable(
+                    route = "${Routes.MEASUREMENT_TYPE_DETAIL}?id={id}",
+                    arguments = listOf(navArgument("id") {
+                        type = NavType.IntType
+                        defaultValue = -1 // Indicates a new type if ID is -1
+                    })
+                ) { backStackEntry ->
+                    val typeId = backStackEntry.arguments?.getInt("id") ?: -1
+                    MeasurementTypeDetailScreen(
+                        navController = navController,
+                        typeId = typeId,
+                        sharedViewModel = sharedViewModel,
+                        settingsViewModel = settingsViewModel
+                    )
+                }
+                composable(Routes.BLUETOOTH_SETTINGS) {
+                    BluetoothScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel,
+                        bluetoothViewModel = bluetoothViewModel
+                    )
+                }
+                composable(Routes.BLUETOOTH_DETAIL) {
+                    BluetoothDetailScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel,
+                        bluetoothViewModel = bluetoothViewModel
+                    )
+                }
+                composable(Routes.CHART_SETTINGS) {
+                    ChartSettingsScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel,
+                        settingsViewModel = settingsViewModel
+                    )
+                }
+                composable(Routes.DATA_MANAGEMENT_SETTINGS) {
+                    DataManagementSettingsScreen(
+                        navController = navController,
+                        settingsViewModel = settingsViewModel
+                    )
+                }
+                composable(Routes.ABOUT_SETTINGS) {
+                    AboutScreen(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel
+                    )
+                }
             }
+            // Box to fill the space behind the system navigation bar, if visible.
+            // This prevents UI elements from being drawn under a translucent navigation bar,
+            // ensuring consistent background color.
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(
+                        WindowInsets.navigationBars // Get insets for the system navigation bar.
+                            .asPaddingValues()
+                            .calculateBottomPadding() // Calculate its height.
+                    )
+                    .background(Black) // Match TopAppBar color or general theme background.
+            )
         }
     }
 }
+
 
 /**
  * Composable function for a dropdown menu in the TopAppBar to switch users or navigate to user management.
