@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- App & General -->
     <string name="app_name" translatable="false">openScale</string>
     <string name="app_logo_content_description">App Logo</string>
@@ -530,6 +530,10 @@
     <!-- About Screen & Diagnostics -->
     <string name="version_info">Version: %1$s (%2$s)</string>
     <string name="project_information_title">Project Information</string>
+    <string name="fork_maintainer_label">Fork Maintainer</string>
+    <string name="fork_maintainer_icon_content_description">Fork Maintainer Icon</string>
+    <string name="fork_project_homepage_display">Fork on GitHub</string>
+    <string name="fork_project_page_label">Fork project page</string>
     <string name="maintainer_label">Maintainer</string>
     <string name="maintainer_icon_content_description">Maintainer Icon</string>
     <string name="project_homepage_display">Project on GitHub</string>

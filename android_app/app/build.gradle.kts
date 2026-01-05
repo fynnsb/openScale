@@ -22,7 +22,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.health.openscale"
+        applicationId = "lol.fynn.openscale"
         minSdk = 31
         targetSdk = 36
         versionCode = 71
@@ -170,6 +170,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.worker)
     implementation(libs.androidx.documentfile)
+    implementation(libs.androidx.compose.material3)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 

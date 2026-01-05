@@ -71,6 +71,7 @@ fun AboutScreen(
     val uriHandler = LocalUriHandler.current
 
     val projectHomepageUrl = "https://github.com/oliexdev/openScale"
+    val forkHomepageUrl = "https://github.com/fynnsb/openScale"
     val licenseUrl = "https://www.gnu.org/licenses/gpl-3.0.html"
 
     LaunchedEffect(Unit) {
@@ -115,6 +116,20 @@ fun AboutScreen(
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
             fontWeight = FontWeight.Bold
+        )
+        InfoListItem(
+            headlineText = "fynn.sb",
+            supportingText = stringResource(R.string.fork_maintainer_label),
+            leadingIconVector = Icons.Filled.Business,
+            leadingIconContentDescription = stringResource(R.string.fork_maintainer_icon_content_description)
+        )
+        InfoListItem(
+            headlineText = stringResource(R.string.fork_project_homepage_display),
+            supportingText = stringResource(R.string.fork_project_page_label),
+            leadingIconVector = Icons.Filled.Home,
+            leadingIconContentDescription = stringResource(R.string.homepage_icon_content_description),
+            url = forkHomepageUrl,
+            uriHandler = uriHandler
         )
         InfoListItem(
             headlineText = "olie.xdev",
