@@ -17,6 +17,7 @@
  */
 package com.health.openscale.ui.screen.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -115,7 +117,14 @@ fun UserGoalChip(
     Card(
         modifier = modifier
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(measurementType.color).copy(alpha = 0.08f)
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = Color(measurementType.color).copy(alpha = 0.2f)
+        )
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
@@ -124,7 +133,8 @@ fun UserGoalChip(
         ) {
             RoundMeasurementIcon(
                 icon = measurementType.icon.resource,
-                backgroundTint = Color(measurementType.color),
+                backgroundTint = Color(measurementType.color).copy(alpha = 0.2f),
+                iconTint = Color(measurementType.color),
                 size = 20.dp,
             )
 
