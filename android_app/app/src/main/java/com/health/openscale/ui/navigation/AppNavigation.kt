@@ -394,7 +394,9 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
         },
         bottomBar = {
             if (currentRoute in mainRoutes) {
-                NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainerLow) {
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                ) {
                     mainRoutes.forEach { route ->
                         val titleResId = Routes.getTitleResourceId(route)
                         val titleText = if (titleResId != Routes.NO_TITLE_RESOURCE_ID) {
@@ -481,13 +483,11 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
             )
         }
     ) { innerPadding ->
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())) {
             NavHost(
                 navController = navController,
                 startDestination = Routes.OVERVIEW,
-                modifier = Modifier
-                    .padding(innerPadding) // Apply padding from Scaffold.
-                    .weight(1f)      // NavHost takes the remaining space in the Column.
+                modifier = Modifier.fillMaxSize()
             ) {
                 // Define all composable screens for navigation routes.
                 composable(Routes.OVERVIEW) {
@@ -630,19 +630,6 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                     )
                 }
             }
-            // Box to fill the space behind the system navigation bar, if visible.
-            // This prevents UI elements from being drawn under a translucent navigation bar,
-            // ensuring consistent background color.
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(
-                        WindowInsets.navigationBars // Get insets for the system navigation bar.
-                            .asPaddingValues()
-                            .calculateBottomPadding() // Calculate its height.
-                    )
-                    .background(Black) // Match TopAppBar color or general theme background.
-            )
         }
     }
 }
