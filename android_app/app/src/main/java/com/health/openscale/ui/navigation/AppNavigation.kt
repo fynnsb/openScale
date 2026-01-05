@@ -483,151 +483,156 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
             )
         }
     ) { innerPadding ->
-        Column(modifier = Modifier.fillMaxSize().padding(top = innerPadding.calculateTopPadding())) {
-            NavHost(
-                navController = navController,
-                startDestination = Routes.OVERVIEW,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // Define all composable screens for navigation routes.
-                composable(Routes.OVERVIEW) {
-                    OverviewScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel,
-                        bluetoothViewModel = bluetoothViewModel
-                    )
-                }
-                composable(Routes.GRAPH) {
-                    GraphScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel
-                    )
-                }
-                composable(Routes.TABLE) {
-                    TableScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel
-                    )
-                }
-                composable(Routes.STATISTICS) {
-                    StatisticsScreen(sharedViewModel)
-                }
-                composable(Routes.SETTINGS) {
-                    SettingsScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel,
-                        settingsViewModel = settingsViewModel
-                    )
-                }
-                composable(Routes.GENERAL_SETTINGS) {
-                    GeneralSettingsScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel,
-                        settingsViewModel = settingsViewModel
-                    )
-                }
-                composable(Routes.USER_SETTINGS) {
-                    UserSettingsScreen(
-                        sharedViewModel = sharedViewModel,
-                        settingsViewModel = settingsViewModel,
-                        onEditUser = { userId ->
-                            navController.navigate(Routes.userDetail(userId))
-                        }
-                    )
-                }
-                composable(
-                    route = "${Routes.USER_DETAIL}?id={id}", // Argument in route pattern
-                    arguments = listOf(navArgument("id") {
-                        type = NavType.IntType
-                        defaultValue = -1 // Indicates a new user if ID is -1 (or not passed)
-                    })
-                ) { backStackEntry ->
-                    val userId = backStackEntry.arguments?.getInt("id") ?: -1
-                    UserDetailScreen(
-                        navController = navController,
-                        userId = userId,
-                        sharedViewModel = sharedViewModel,
-                        settingsViewModel = settingsViewModel
-                    )
-                }
-                composable(Routes.MEASUREMENT_TYPES) {
-                    MeasurementTypeSettingsScreen(
-                        sharedViewModel = sharedViewModel,
-                        settingsViewModel = settingsViewModel,
-                        onEditType = { typeId ->
-                            navController.navigate(Routes.measurementTypeDetail(typeId))
-                        }
-                    )
-                }
-                composable(
-                    route = "${Routes.MEASUREMENT_DETAIL}?measurementId={measurementId}&userId={userId}",
-                    arguments = listOf(
-                        navArgument("measurementId") {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.weight(1f).padding(innerPadding)) {
+                NavHost(
+                    navController = navController,
+                    startDestination = Routes.OVERVIEW,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    // Define all composable screens for navigation routes.
+                    composable(Routes.OVERVIEW) {
+                        OverviewScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel,
+                            bluetoothViewModel = bluetoothViewModel
+                        )
+
+                    }
+                    composable(Routes.GRAPH) {
+                        GraphScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel
+                        )
+                    }
+                    composable(Routes.TABLE) {
+                        TableScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel
+                        )
+                    }
+                    composable(Routes.STATISTICS) {
+                        StatisticsScreen(sharedViewModel)
+                    }
+                    composable(Routes.SETTINGS) {
+                        SettingsScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel,
+                            settingsViewModel = settingsViewModel
+                        )
+                    }
+                    composable(Routes.GENERAL_SETTINGS) {
+                        GeneralSettingsScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel,
+                            settingsViewModel = settingsViewModel
+                        )
+                    }
+                    composable(Routes.USER_SETTINGS) {
+                        UserSettingsScreen(
+                            sharedViewModel = sharedViewModel,
+                            settingsViewModel = settingsViewModel,
+                            onEditUser = { userId ->
+                                navController.navigate(Routes.userDetail(userId))
+                            }
+                        )
+                    }
+                    composable(
+                        route = "${Routes.USER_DETAIL}?id={id}", // Argument in route pattern
+                        arguments = listOf(navArgument("id") {
                             type = NavType.IntType
-                            defaultValue = -1 // Default if not provided
-                        },
-                        navArgument("userId") {
+                            defaultValue = -1 // Indicates a new user if ID is -1 (or not passed)
+                        })
+                    ) { backStackEntry ->
+                        val userId = backStackEntry.arguments?.getInt("id") ?: -1
+                        UserDetailScreen(
+                            navController = navController,
+                            userId = userId,
+                            sharedViewModel = sharedViewModel,
+                            settingsViewModel = settingsViewModel
+                        )
+                    }
+                    composable(Routes.MEASUREMENT_TYPES) {
+                        MeasurementTypeSettingsScreen(
+                            sharedViewModel = sharedViewModel,
+                            settingsViewModel = settingsViewModel,
+                            onEditType = { typeId ->
+                                navController.navigate(Routes.measurementTypeDetail(typeId))
+                            }
+                        )
+                    }
+                    composable(
+                        route = "${Routes.MEASUREMENT_DETAIL}?measurementId={measurementId}&userId={userId}",
+                        arguments = listOf(
+                            navArgument("measurementId") {
+                                type = NavType.IntType
+                                defaultValue = -1 // Default if not provided
+                            },
+                            navArgument("userId") {
+                                type = NavType.IntType
+                                defaultValue =
+                                    -1 // Default if not provided, might also fetch from selectedUser if appropriate
+                            }
+                        )
+                    ) { backStackEntry ->
+                        val measurementId = backStackEntry.arguments?.getInt("measurementId") ?: -1
+                        val userId = backStackEntry.arguments?.getInt("userId") ?: -1
+                        MeasurementDetailScreen(
+                            navController = navController,
+                            measurementId = measurementId,
+                            userId = userId,
+                            sharedViewModel = sharedViewModel
+                        )
+                    }
+                    composable(
+                        route = "${Routes.MEASUREMENT_TYPE_DETAIL}?id={id}",
+                        arguments = listOf(navArgument("id") {
                             type = NavType.IntType
-                            defaultValue = -1 // Default if not provided, might also fetch from selectedUser if appropriate
-                        }
-                    )
-                ) { backStackEntry ->
-                    val measurementId = backStackEntry.arguments?.getInt("measurementId") ?: -1
-                    val userId = backStackEntry.arguments?.getInt("userId") ?: -1
-                    MeasurementDetailScreen(
-                        navController = navController,
-                        measurementId = measurementId,
-                        userId = userId,
-                        sharedViewModel = sharedViewModel
-                    )
-                }
-                composable(
-                    route = "${Routes.MEASUREMENT_TYPE_DETAIL}?id={id}",
-                    arguments = listOf(navArgument("id") {
-                        type = NavType.IntType
-                        defaultValue = -1 // Indicates a new type if ID is -1
-                    })
-                ) { backStackEntry ->
-                    val typeId = backStackEntry.arguments?.getInt("id") ?: -1
-                    MeasurementTypeDetailScreen(
-                        navController = navController,
-                        typeId = typeId,
-                        sharedViewModel = sharedViewModel,
-                        settingsViewModel = settingsViewModel
-                    )
-                }
-                composable(Routes.BLUETOOTH_SETTINGS) {
-                    BluetoothScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel,
-                        bluetoothViewModel = bluetoothViewModel
-                    )
-                }
-                composable(Routes.BLUETOOTH_DETAIL) {
-                    BluetoothDetailScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel,
-                        bluetoothViewModel = bluetoothViewModel
-                    )
-                }
-                composable(Routes.CHART_SETTINGS) {
-                    ChartSettingsScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel,
-                        settingsViewModel = settingsViewModel
-                    )
-                }
-                composable(Routes.DATA_MANAGEMENT_SETTINGS) {
-                    DataManagementSettingsScreen(
-                        navController = navController,
-                        settingsViewModel = settingsViewModel
-                    )
-                }
-                composable(Routes.ABOUT_SETTINGS) {
-                    AboutScreen(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel
-                    )
+                            defaultValue = -1 // Indicates a new type if ID is -1
+                        })
+                    ) { backStackEntry ->
+                        val typeId = backStackEntry.arguments?.getInt("id") ?: -1
+                        MeasurementTypeDetailScreen(
+                            navController = navController,
+                            typeId = typeId,
+                            sharedViewModel = sharedViewModel,
+                            settingsViewModel = settingsViewModel
+                        )
+                    }
+                    composable(Routes.BLUETOOTH_SETTINGS) {
+                        BluetoothScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel,
+                            bluetoothViewModel = bluetoothViewModel
+                        )
+                    }
+                    composable(Routes.BLUETOOTH_DETAIL) {
+                        BluetoothDetailScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel,
+                            bluetoothViewModel = bluetoothViewModel
+                        )
+                    }
+                    composable(Routes.CHART_SETTINGS) {
+                        ChartSettingsScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel,
+                            settingsViewModel = settingsViewModel
+                        )
+                    }
+                    composable(Routes.DATA_MANAGEMENT_SETTINGS) {
+                        DataManagementSettingsScreen(
+                            navController = navController,
+                            settingsViewModel = settingsViewModel
+                        )
+                    }
+                    composable(Routes.ABOUT_SETTINGS) {
+                        AboutScreen(
+                            navController = navController,
+                            sharedViewModel = sharedViewModel
+                        )
+                    }
+
                 }
             }
         }
