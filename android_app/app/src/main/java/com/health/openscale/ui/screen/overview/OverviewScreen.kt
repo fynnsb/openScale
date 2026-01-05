@@ -1159,9 +1159,9 @@ fun MeasurementCard(
             .clickable(onClick = onClick),
         border = if (isHighlighted) highlightBorder else null,
         colors = if (isHighlighted) {
-            CardDefaults.cardColors(containerColor = highlightColor)
+            CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
         } else {
-            CardDefaults.cardColors()
+            CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
         },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
