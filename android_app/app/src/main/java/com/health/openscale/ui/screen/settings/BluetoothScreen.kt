@@ -53,6 +53,7 @@ import androidx.compose.material.icons.rounded.BluetoothDisabled
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
@@ -639,7 +640,7 @@ fun DeviceCardItem(
                 Box {
                     IconButton(onClick = { showMenu = true }) {
                         Icon(
-                            imageVector = Icons.Filled.MoreVert,
+                            imageVector = Icons.Rounded.MoreVert,
                             contentDescription = stringResource(R.string.more_options_cd)
                         )
                     }
