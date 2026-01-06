@@ -246,12 +246,12 @@ fun BluetoothDetailScreen(
                             if (isDeveloperActive) {
                                 // Deactivating Debug Mode: Restore original name and handler.
                                 bluetoothViewModel.saveDeviceAsPreferred(
-                                    ScannedDeviceInfo(name = currentDevice.determinedHandlerDisplayName!!, address = currentDevice.address, rssi = 0, serviceUuids = emptyList(), manufacturerData = null, isSupported = true, determinedHandlerDisplayName = currentDevice.determinedHandlerDisplayName!!)
+                                    ScannedDeviceInfo(name = currentDevice.determinedHandlerDisplayName!!, address = currentDevice.address, rssi = 0, serviceUuids = currentDevice.serviceUuids, manufacturerData = currentDevice.manufacturerData, isSupported = true, determinedHandlerDisplayName = currentDevice.determinedHandlerDisplayName)
                                 )
                             } else {
                                 // Activating Debug Mode: Change name and handler, but keep the address.
                                 bluetoothViewModel.saveDeviceAsPreferred(
-                                    ScannedDeviceInfo(name = "Debug", address = currentDevice.address, rssi = 0, serviceUuids = emptyList(), manufacturerData = null, isSupported = true, determinedHandlerDisplayName = currentDevice.name)
+                                    ScannedDeviceInfo(name = "Debug", address = currentDevice.address, rssi = 0, serviceUuids = currentDevice.serviceUuids, manufacturerData = currentDevice.manufacturerData, isSupported = true, determinedHandlerDisplayName = currentDevice.name)
                                 )
                             }
                         }
