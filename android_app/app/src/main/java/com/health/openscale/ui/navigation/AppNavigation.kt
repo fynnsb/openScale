@@ -392,9 +392,9 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                 // Custom Snackbar appearance defined here.
                 Snackbar(
                     modifier = Modifier.padding(8.dp), // Padding around the snackbar.
-                    shape = RoundedCornerShape(8.dp), // Rounded corners for the snackbar.
-                    containerColor = Blue, // Custom background color.
-                    contentColor = White,    // Custom text and icon color.
+                    shape = RoundedCornerShape(16.dp), // Rounded corners for the snackbar.
+                    containerColor = MaterialTheme.colorScheme.primaryContainer, // Custom background color.
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,    // Custom text and icon color.
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
