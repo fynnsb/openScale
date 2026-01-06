@@ -1,4 +1,4 @@
-# openScale Redesigned
+# <img alt="openScale Redesigned Logo" width="75" src="https://raw.githubusercontent.com/fynnsb/openScale/refs/heads/master/android_app/app/src/main/ic_launcher-playstore.png"/> openScale Redesigned
 Fork of [openScale](https://github.com/oliexdev/openScale)
 
 A simple, privacy-focused weight tracker for Android, with support for various Bluetooth scales.
@@ -6,6 +6,25 @@ A simple, privacy-focused weight tracker for Android, with support for various B
 ## Changes in this Fork ✨
 - 📱 **Navigation:** Switched from Navigation Drawer to a Bottom Navigation Bar.
 - 🎨 **Material Design:** Updated the UI to be more in line with Material Design standards.
+
+# Screenshots :eyes:
+
+<table>
+  <tr>
+    <th>
+        <a href="fastlane/metadata/android/en-GB/images/phoneScreenshots/overview.png" target="_blank">
+        <img src='fastlane/metadata/android/en-GB/images/phoneScreenshots/overview.png' width='200px' alt='image missing' /> </a>
+    </th>
+    <th>
+        <a href="fastlane/metadata/android/en-GB/images/phoneScreenshots/charts.png" target="_blank">
+        <img src='fastlane/metadata/android/en-GB/images/phoneScreenshots/charts.png' width='200px' alt='image missing' /> </a>
+    </th>
+    <th>
+        <a href="fastlane/metadata/android/en-GB/images/phoneScreenshots/history.png" target="_blank">
+        <img src='fastlane/metadata/android/en-GB/images/phoneScreenshots/history.png' width='200px' alt='image missing' /> </a>
+    </th>
+  </tr>
+</table>
 
 ## License :page_facing_up:
 
