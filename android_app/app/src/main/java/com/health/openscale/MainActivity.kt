@@ -36,6 +36,7 @@ import com.health.openscale.ui.shared.SharedViewModel
 import com.health.openscale.ui.theme.OpenScaleTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 
 /**
@@ -54,6 +55,8 @@ class MainActivity : ComponentActivity() {
     lateinit var settingsFacade: SettingsFacade
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 

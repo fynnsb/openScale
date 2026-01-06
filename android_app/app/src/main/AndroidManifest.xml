@@ -31,11 +31,11 @@
         android:label="${appName}"
         android:roundIcon="${appRoundIcon}"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OpenScale">
+        android:theme="@style/Theme.App.Starting">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.OpenScale">
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
