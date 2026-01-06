@@ -3,6 +3,8 @@ Fork of [openScale](https://github.com/oliexdev/openScale)
 
 A simple, privacy-focused weight tracker for Android, with support for various Bluetooth scales.
 
+[<img src="https://img.shields.io/github/v/release/fynnsb/openScale?label=Download%20APK&style=for-the-badge&color=brightgreen&logo=android" width="250">](https://github.com/fynnsb/openScale/releases/latest)
+
 ## Changes in this Fork ✨
 - 📱 **Navigation:** Switched from Navigation Drawer to a Bottom Navigation Bar.
 - 🎨 **Material Design:** Updated the UI to be more in line with Material Design standards.
