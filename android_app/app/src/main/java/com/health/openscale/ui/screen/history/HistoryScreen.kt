@@ -120,6 +120,7 @@ import com.health.openscale.ui.screen.components.provideFilterTopBarAction
 import com.health.openscale.ui.screen.dialog.UserInputDialog
 import com.health.openscale.ui.screen.overview.NoUserSelectedCard
 import com.health.openscale.ui.screen.overview.determineBluetoothTopBarAction
+import com.health.openscale.ui.screen.overview.rememberBluetoothTopBarAction
 import com.health.openscale.ui.screen.overview.smartScrollTo
 import com.health.openscale.ui.shared.TopBarAction
 import kotlinx.coroutines.delay
@@ -129,17 +130,32 @@ import kotlinx.coroutines.delay
 fun HistoryScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
+    bluetoothViewModel: BluetoothViewModel,
 ) {
 
     val context = LocalContext.current
     sharedViewModel.setTopBarTitle(context.getString(R.string.route_title_history))
     sharedViewModel.setTopBarActions(listOfNotNull())
 
-
     val selectedUserId by sharedViewModel.selectedUserId.collectAsState()
+    val selectedUser by sharedViewModel.selectedUser.collectAsState()
 
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
+
+    // Einfach diesen "Hook" aufrufen
+    val bluetoothAction = rememberBluetoothTopBarAction(
+        sharedViewModel = sharedViewModel,
+        bluetoothViewModel = bluetoothViewModel,
+        navController = navController,
+        currentSelectedUser = selectedUser
+    )
+    DisposableEffect(bluetoothAction){
+        val actions = mutableListOf<TopBarAction>()
+        bluetoothAction?.let { actions.add(it) }
+        sharedViewModel.setTopBarActions(actions)
+        onDispose { }
+    }
 
 
     val overviewState by sharedViewModel.overviewUiState.collectAsState()
@@ -687,6 +703,7 @@ fun HistoryScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RoundMeasurementIcon(
+                    size = 24.dp,
                     icon = iconMeasurementType.resource,
                     backgroundTint = Color(type.color).copy(alpha = 0.2f),
                     iconTint = Color(type.color)

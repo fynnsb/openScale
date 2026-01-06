@@ -323,73 +323,16 @@ fun determineBluetoothTopBarAction(
     }
 }
 
-/**
- * The main screen for displaying an overview of measurements, user status, and Bluetooth controls.
- * It allows users to view their measurement history, add new measurements, and manage Bluetooth scale connections.
- *
- * @param navController The [NavController] used for navigating between screens.
- * @param sharedViewModel The [SharedViewModel] providing access to shared data like user selection,
- *                        measurements, and top bar configuration.
- * @param bluetoothViewModel The [BluetoothViewModel] for managing Bluetooth state and actions.
- */
 @Composable
-fun OverviewScreen(
-    navController: NavController,
+fun rememberBluetoothTopBarAction(
     sharedViewModel: SharedViewModel,
-    bluetoothViewModel: BluetoothViewModel
-) {
-    val selectedUserId by sharedViewModel.selectedUserId.collectAsState()
-    val context = LocalContext.current // Used for Toasts and string resources
-
-    val listState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
-
-    // Time filter action for the top bar, specific to this screen's context
-    val timeFilterAction = provideFilterTopBarAction(
-        sharedViewModel = sharedViewModel,
-        screenContextName = SettingsPreferenceKeys.OVERVIEW_SCREEN_CONTEXT
-    )
-    val overviewState by sharedViewModel.overviewUiState.collectAsState()
-    val hasData = (overviewState as? SharedViewModel.UiState.Success)?.data?.isNotEmpty() == true
-
-    // --- Chart selection logic reverted to local state management ---
-    val allMeasurementTypes by sharedViewModel.measurementTypes.collectAsState()
-    val goalDialogContextData by sharedViewModel.userGoalDialogContext.collectAsState()
-    val userGoals by if (selectedUserId != null && selectedUserId != 0) {
-        sharedViewModel.getAllGoalsForUser(selectedUserId!!).collectAsState(initial = emptyList())
-    } else {
-        remember { mutableStateOf(emptyList<UserGoals>()) }
-    }
-    val isGoalsSectionExpanded by sharedViewModel.myGoalsExpandedOverview.collectAsState(
-        initial = true
-    )
-
-
-    val userEvalContext by sharedViewModel.userEvaluationContext.collectAsState()
+    bluetoothViewModel: BluetoothViewModel,
+    navController: NavController,
+    currentSelectedUser: User?
+): TopBarAction? {
+    val context = LocalContext.current
     var showReferenceDialogForUser by remember { mutableStateOf<User?>(null) }
     val allUsers by sharedViewModel.allUsers.collectAsState(initial = emptyList())
-    val currentSelectedUser by sharedViewModel.selectedUser.collectAsState()
-    var currentSelectedMeasurementId by rememberSaveable { mutableStateOf<Int?>(null) }
-
-    val goalReferenceMeasurement: MeasurementWithValues? = remember(currentSelectedMeasurementId, overviewState) {
-        val currentData = if (overviewState is SharedViewModel.UiState.Success) {
-            (overviewState as SharedViewModel.UiState.Success<List<EnrichedMeasurement>>).data
-        } else {
-            emptyList()
-        }
-        if (currentSelectedMeasurementId != null && currentData.isNotEmpty()) {
-            currentData.find { it.measurementWithValues.measurement.id == currentSelectedMeasurementId }
-                ?.measurementWithValues
-        } else if (currentData.isNotEmpty()) {
-            currentData.firstOrNull()?.measurementWithValues
-        } else {
-            null
-        }
-    }
-
-
-
-    // --- End of reverted chart selection logic ---
 
     val savedDevice by bluetoothViewModel.savedDevice.collectAsState()
     val connectionStatus by bluetoothViewModel.connectionStatus.collectAsState()
@@ -482,7 +425,7 @@ fun OverviewScreen(
     }
 
     // Determine the Bluetooth action for the top bar
-    val bluetoothTopBarAction = determineBluetoothTopBarAction(
+    return determineBluetoothTopBarAction(
         context = context,
         savedAddr = savedDeviceAddress,
         connStatusEnum = connectionStatus,
@@ -498,26 +441,101 @@ fun OverviewScreen(
             showReferenceDialogForUser = user
         }
     )
+}
+
+/**
+ * The main screen for displaying an overview of measurements, user status, and Bluetooth controls.
+ * It allows users to view their measurement history, add new measurements, and manage Bluetooth scale connections.
+ *
+ * @param navController The [NavController] used for navigating between screens.
+ * @param sharedViewModel The [SharedViewModel] providing access to shared data like user selection,
+ *                        measurements, and top bar configuration.
+ * @param bluetoothViewModel The [BluetoothViewModel] for managing Bluetooth state and actions.
+ */
+@Composable
+fun OverviewScreen(
+    navController: NavController,
+    sharedViewModel: SharedViewModel,
+    bluetoothViewModel: BluetoothViewModel
+) {
+    val selectedUserId by sharedViewModel.selectedUserId.collectAsState()
+    val context = LocalContext.current // Used for Toasts and string resources
+
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+
+    // Time filter action for the top bar, specific to this screen's context
+    val timeFilterAction = provideFilterTopBarAction(
+        sharedViewModel = sharedViewModel,
+        screenContextName = SettingsPreferenceKeys.OVERVIEW_SCREEN_CONTEXT
+    )
+    val overviewState by sharedViewModel.overviewUiState.collectAsState()
+    val hasData = (overviewState as? SharedViewModel.UiState.Success)?.data?.isNotEmpty() == true
+
+    // --- Chart selection logic reverted to local state management ---
+    val allMeasurementTypes by sharedViewModel.measurementTypes.collectAsState()
+    val goalDialogContextData by sharedViewModel.userGoalDialogContext.collectAsState()
+    val userGoals by if (selectedUserId != null && selectedUserId != 0) {
+        sharedViewModel.getAllGoalsForUser(selectedUserId!!).collectAsState(initial = emptyList())
+    } else {
+        remember { mutableStateOf(emptyList<UserGoals>()) }
+    }
+    val isGoalsSectionExpanded by sharedViewModel.myGoalsExpandedOverview.collectAsState(
+        initial = true
+    )
+
+
+    val userEvalContext by sharedViewModel.userEvaluationContext.collectAsState()
+    var showReferenceDialogForUser by remember { mutableStateOf<User?>(null) }
+    val allUsers by sharedViewModel.allUsers.collectAsState(initial = emptyList())
+    val currentSelectedUser by sharedViewModel.selectedUser.collectAsState()
+    var currentSelectedMeasurementId by rememberSaveable { mutableStateOf<Int?>(null) }
+
+    val goalReferenceMeasurement: MeasurementWithValues? = remember(currentSelectedMeasurementId, overviewState) {
+        val currentData = if (overviewState is SharedViewModel.UiState.Success) {
+            (overviewState as SharedViewModel.UiState.Success<List<EnrichedMeasurement>>).data
+        } else {
+            emptyList()
+        }
+        if (currentSelectedMeasurementId != null && currentData.isNotEmpty()) {
+            currentData.find { it.measurementWithValues.measurement.id == currentSelectedMeasurementId }
+                ?.measurementWithValues
+        } else if (currentData.isNotEmpty()) {
+            currentData.firstOrNull()?.measurementWithValues
+        } else {
+            null
+        }
+    }
+
+
+
+    // --- End of reverted chart selection logic ---
+
+
 
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    val bluetoothAction = rememberBluetoothTopBarAction(
+        sharedViewModel = sharedViewModel,
+        bluetoothViewModel = bluetoothViewModel,
+        navController = navController,
+        currentSelectedUser = currentSelectedUser
+    )
 
     // DisposableEffect to configure the top bar based on the current state
     DisposableEffect(
         lifecycleOwner,
         selectedUserId,
         hasData,
-        bluetoothTopBarAction,
+        bluetoothAction,
         timeFilterAction,
-        savedDeviceAddress,
-        connectionStatus,
-        connectedDeviceAddr
     ) {
         fun updateTopBar() {
             sharedViewModel.setTopBarTitle(context.getString(R.string.route_title_overview))
             val actions = mutableListOf<TopBarAction>()
 
             // 0. Add Bluetooth action (if determined) at the beginning
-            bluetoothTopBarAction?.let { btAction ->
+            bluetoothAction?.let { btAction ->
                 actions.add(btAction)
             }
 

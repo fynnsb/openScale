@@ -540,6 +540,7 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                         HistoryScreen(
                             navController = navController,
                             sharedViewModel = sharedViewModel,
+                            bluetoothViewModel = bluetoothViewModel
                         )
                     }
                     composable(Routes.GRAPH) {
