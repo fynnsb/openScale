@@ -20,6 +20,7 @@ package com.health.openscale.ui.screen.components
 import android.text.Layout
 import android.text.format.DateFormat
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,6 +33,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Check
@@ -65,6 +67,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
@@ -72,6 +75,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.health.openscale.R
 import com.health.openscale.core.data.InputFieldType
@@ -118,6 +122,7 @@ import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerRangeProvider
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianValueFormatter
 import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
 import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
+import com.patrykandpatrick.vico.core.cartesian.layer.CartesianLayerPadding
 import com.patrykandpatrick.vico.core.cartesian.layer.LineCartesianLayer
 import com.patrykandpatrick.vico.core.cartesian.marker.CartesianMarker
 import com.patrykandpatrick.vico.core.cartesian.marker.CartesianMarkerVisibilityListener
@@ -389,6 +394,9 @@ fun MeasurementChart(
                     .fillMaxWidth()
                     .weight(localSplitterWeight)
                     .padding(horizontal = 8.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                    .padding(horizontal = 16.dp)
             ) {
                 PeriodChart(
                     modifier = Modifier.fillMaxHeight(),
@@ -496,9 +504,13 @@ fun MeasurementChart(
             chartSeries.isEmpty() -> {
                 Box(
                     modifier = Modifier
+                        .padding(horizontal = 8.dp)
                         .weight(1f)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceContainer)
+                        .padding(horizontal = 16.dp),
+                contentAlignment = Alignment.Center
                 ) {
                     val message = if (lineTypesToActuallyPlot.isEmpty() && effectiveShowTypeFilterRow) {
                         if (currentSelectedTypeIntIds.isNotEmpty() && (smoothedData ?: emptyList()).none { m -> m.measurementWithValues.values.any { v -> v.type.id in currentSelectedTypeIntIds } }) {
@@ -547,7 +559,7 @@ fun MeasurementChart(
                     targetMeasurementTypeId = targetMeasurementTypeId,
                 )
 
-                val goalDecorations = if (showGoalLinesSetting) {
+                val goalDecorations = if (showGoalLinesSetting && showPeriodChart) {
                     goalsToActuallyPlot.map { goal ->
                         val typeForGoal = allAvailableMeasurementTypes.find { it.id == goal.measurementTypeId }
                         rememberGoalLine(goal = goal, type = typeForGoal)
@@ -571,12 +583,26 @@ fun MeasurementChart(
                     decorations = goalDecorations
                 )
 
+
+                var modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(if (showPeriodChart) 1f - localSplitterWeight else 1f)
+
+                if(showPeriodChart){
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceContainer)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .weight(1f - localSplitterWeight)
+                }
+
                 CartesianChartHost(
                     chart = chart,
                     modelProducer = modelProducer,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(if (showPeriodChart) 1f - localSplitterWeight else 1f),
+                    modifier = modifier,
                     scrollState = scrollState,
                     zoomState = zoomState
                 )
@@ -587,7 +613,7 @@ fun MeasurementChart(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp, bottom = 0.dp, start = 16.dp, end = 16.dp),
+                    .padding(top = 16.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -1242,10 +1268,10 @@ private fun createLineSpec(
         // Points on the line are shown unless in statistics mode or for projections
         pointProvider = if (showPoints && !statisticsMode && !isProjection) {
             LineCartesianLayer.PointProvider.single(
-                LineCartesianLayer.point(ShapeComponent(fill(color.copy(alpha = 0.7f)), CorneredShape.Pill), 6.dp)
+                LineCartesianLayer.point(ShapeComponent(fill(color.copy(alpha = 0.7f)), CorneredShape.Pill), 10.dp)
             )
         } else null,
-        pointConnector = LineCartesianLayer.PointConnector.cubic()
+        pointConnector = LineCartesianLayer.PointConnector.cubic(0.4f)
     )
 }
 
@@ -1307,14 +1333,15 @@ fun rememberMarker(
     val labelBackgroundShape = markerCorneredShape(CorneredShape.Corner.Rounded)
     val labelBackground =
         rememberShapeComponent(
-            fill = fill(MaterialTheme.colorScheme.background),
+            fill = fill(MaterialTheme.colorScheme.surfaceContainerHighest),
             shape = labelBackgroundShape,
-            strokeThickness = 1.dp,
-            strokeFill = fill(MaterialTheme.colorScheme.outline), // Outline for the label
+            //strokeThickness = 1.dp,
+            //strokeFill = fill(MaterialTheme.colorScheme.outline), // Outline for the label
         )
     val label =
         rememberTextComponent(
             // Text component for the marker
+            textSize = 14.sp,
             color = MaterialTheme.colorScheme.onSurface, // Text color
             textAlignment = Layout.Alignment.ALIGN_CENTER,
             padding = insets(horizontal = 8.dp, vertical = 4.dp), // Padding within the label
@@ -1327,6 +1354,7 @@ fun rememberMarker(
 
     return rememberDefaultCartesianMarker(
         label = label,
+        labelPosition = DefaultCartesianMarker.LabelPosition.AroundPoint,
         valueFormatter = valueFormatter,
         indicator = // Custom indicator drawing logic
             if (showIndicator) {
@@ -1349,7 +1377,7 @@ fun rememberMarker(
                 null // No indicator if showIndicator is false
             },
         indicatorSize = 36.dp, // Overall size of the indicator area
-        guideline = guideline, // Vertical guideline that follows the marker
+        //guideline = guideline, // Vertical guideline that follows the marker
     )
 }
 

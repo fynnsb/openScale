@@ -191,7 +191,7 @@ fun MeasurementTypeFilterRow(
     ) {
         selectableTypes.forEach { type ->
             val isSelected = type.id in displayedSelectedIds
-            val iconBackgroundColor = if (isSelected) Color(type.color).copy(alpha = 0.2f) else MaterialTheme.colorScheme.surfaceVariant
+            val iconBackgroundColor = if (isSelected) Color(type.color).copy(alpha = 0.2f) else MaterialTheme.colorScheme.surfaceContainer
             val iconColor = if (isSelected) Color(type.color) else MaterialTheme.colorScheme.onSurfaceVariant // Consider MaterialTheme.colorScheme.onPrimary for selected state if type.color is primary-like
 
             RoundMeasurementIcon(

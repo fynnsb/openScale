@@ -324,12 +324,13 @@ fun StatisticCard(
             .fillMaxWidth()
             .padding(vertical = 6.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(measurementType.color).copy(alpha = 0.08f)
+            //containerColor = Color(measurementType.color).copy(alpha = 0.08f)
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
         ),
-        border = BorderStroke(
-            width = 1.dp,
-            color = Color(measurementType.color).copy(alpha = 0.2f)
-        )
+        //border = BorderStroke(
+            //width = 1.dp,
+            //color = Color(measurementType.color).copy(alpha = 0.2f)
+        //)
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             // --- TOP ROW: Icon, Name, Min/Max/Avg ---

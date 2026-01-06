@@ -19,7 +19,9 @@ package com.health.openscale.ui.screen.components
 
 import android.text.TextUtils
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberAxisLabelComponent
@@ -36,8 +39,10 @@ import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberColumnCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.layer.stacked
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
+import com.patrykandpatrick.vico.compose.common.shape.rounded
 import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerRangeProvider
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianValueFormatter
 import com.patrykandpatrick.vico.core.cartesian.data.columnSeries
 import com.patrykandpatrick.vico.core.cartesian.layer.ColumnCartesianLayer
@@ -48,7 +53,12 @@ import com.patrykandpatrick.vico.core.cartesian.marker.ColumnCartesianLayerMarke
 import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.core.common.Fill
 import com.patrykandpatrick.vico.core.common.component.LineComponent
+import com.patrykandpatrick.vico.core.common.component.ShapeComponent
 import com.patrykandpatrick.vico.core.common.data.ExtraStore
+import com.patrykandpatrick.vico.core.common.shape.*
+import kotlin.math.ceil
+import kotlin.math.floor
+
 
 private val BottomAxisLabelKey = ExtraStore.Key<List<String>>()
 
@@ -86,21 +96,34 @@ fun PeriodChart(
     onPeriodClick: (PeriodDataPoint?) -> Unit
 ) {
     // Fill colors for unselected and selected bars
-    val unselectedColor = Fill(MaterialTheme.colorScheme.primaryContainer.toArgb())
+    val unselectedColor = Fill(MaterialTheme.colorScheme.surfaceVariant.toArgb())
     val selectedColor = Fill(MaterialTheme.colorScheme.primary.toArgb())
 
     // Chart model producer that holds and updates the dataset
     val modelProducer = remember { CartesianChartModelProducer() }
 
+    val rangeProvider = remember {
+        object : CartesianLayerRangeProvider {
+            override fun getMinY(minY: Double, maxY: Double, extraStore: ExtraStore): Double {
+                return 0.0
+            }
+
+            override fun getMaxY(minY: Double, maxY: Double, extraStore: ExtraStore): Double {
+                return maxY + 1
+            }
+        }
+    }
+
     // Define a stacked column layer: one series for unselected, one for selected items
     val columnLayer = rememberColumnCartesianLayer(
         ColumnCartesianLayer.ColumnProvider.series(
             listOf(
-                LineComponent(fill = unselectedColor, thicknessDp = 12f),
-                LineComponent(fill = selectedColor, thicknessDp = 12f)
+                LineComponent(fill = unselectedColor, thicknessDp = 20f, shape = CorneredShape.rounded(topLeft = 10.dp, topRight = 10.dp)),
+                LineComponent(fill = selectedColor, thicknessDp = 20f, shape = CorneredShape.rounded(topLeft = 10.dp, topRight = 10.dp))
             )
         ),
         mergeMode = { ColumnCartesianLayer.MergeMode.stacked() },
+        rangeProvider = rangeProvider
     )
 
     // Update the chart model when data or selected period changes
@@ -124,7 +147,7 @@ fun PeriodChart(
         columnLayer,
         startAxis = null,
         bottomAxis = HorizontalAxis.rememberBottom(
-            itemPlacer = HorizontalAxis.ItemPlacer.segmented(),
+            itemPlacer = HorizontalAxis.ItemPlacer.aligned(),
             valueFormatter = CartesianValueFormatter { context, x, _ ->
                 val labels = context.model.extraStore[BottomAxisLabelKey]
                 if (labels.isNotEmpty() && x.toInt() in labels.indices) labels[x.toInt()] else ""
@@ -132,7 +155,7 @@ fun PeriodChart(
             guideline = null,
             label = rememberAxisLabelComponent(
                 lineCount = 2,       // allow wrapping if needed
-                textSize = 9.sp,
+                textSize = 12.sp,
                 truncateAt = TextUtils.TruncateAt.MARQUEE
             )
         ),

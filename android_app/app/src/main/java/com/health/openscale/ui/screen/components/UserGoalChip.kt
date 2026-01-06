@@ -121,12 +121,13 @@ fun UserGoalChip(
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(measurementType.color).copy(alpha = 0.08f)
+            //containerColor = Color(measurementType.color).copy(alpha = 0.08f)
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
         ),
-        border = BorderStroke(
-            width = 1.dp,
-            color = Color(measurementType.color).copy(alpha = 0.2f)
-        )
+        //border = BorderStroke(
+        //    width = 1.dp,
+        //    color = Color(measurementType.color).copy(alpha = 0.2f)
+        //)
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
