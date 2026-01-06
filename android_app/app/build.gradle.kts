@@ -29,7 +29,7 @@ android {
         applicationId = "lol.fynn.openscale"
         minSdk = 31
         targetSdk = 36
-        versionCode = 71
+        versionCode = 72
         versionName = "$upstreamVersion-r$forkRevision"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
