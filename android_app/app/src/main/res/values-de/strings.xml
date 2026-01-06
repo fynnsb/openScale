@@ -527,6 +527,7 @@
     <!-- Über-Bildschirm & Diagnose -->
     <string name="version_info">Version: %1$s (%2$s)</string>
     <string name="project_information_title">Projektinformationen</string>
+    <string name="fork_project_page_label">Fork Projektseite</string>
     <string name="maintainer_label">Hauptentwickler</string>
     <string name="maintainer_icon_content_description">Hauptentwickler-Symbol</string>
     <string name="project_homepage_display">Projekt auf GitHub</string>
@@ -756,4 +757,8 @@
     <string name="bt_sbf72_choice_slot_other_user">P%1$d: Verwendet von %2$s (Übernehmen?)</string>
     <string name="bt_sbf72_choice_slot_occupied_unmapped">P%1$d: Belegt (Nicht verknüpft)</string>
     <string name="bt_sbf72_choice_slot_create_new">P%1$d: \'%2$s\' hier erstellen</string>
+    <string name="fork_maintainer_label">Fork Entwickler</string>
+    <string name="fork_maintainer_icon_content_description">Fork Entwickler Icon</string>
+    <string name="fork_project_homepage_display">Fork auf GitHub</string>
+    <string name="route_title_history">Verlauf</string>
 </resources>
