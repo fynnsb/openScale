@@ -21,69 +21,22 @@ android {
     namespace = "com.health.openscale"
     compileSdk = 36
 
+    // --- Versioning ---
+    val upstreamVersion = "3.0.1"
+    val forkRevision = 1
+
     defaultConfig {
         applicationId = "lol.fynn.openscale"
         minSdk = 31
         targetSdk = 36
         versionCode = 71
-        versionName = "3.0.1"
+        versionName = "$upstreamVersion-r$forkRevision"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders["appName"] = "openScale"
+        manifestPlaceholders["appName"] = "openScale Redesigned"
+        manifestPlaceholders["appNameLauncher"] = "openScale"
         manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
         manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_round"
-    }
-
-    signingConfigs {
-        create("release") {
-            val keystorePropertiesFile = rootProject.file("../../openScale.keystore")
-            val keystoreProperties = Properties()
-            var propertiesLoaded : Boolean
-
-            try {
-                FileInputStream(keystorePropertiesFile).use { fis ->
-                    keystoreProperties.load(fis)
-                }
-                propertiesLoaded = true
-            } catch (e: FileNotFoundException) {
-                project.logger.warn("Keystore properties file not found: ${keystorePropertiesFile.absolutePath}. Release signing might fail if not configured via environment variables.")
-                propertiesLoaded = false
-            }
-
-            if (propertiesLoaded && keystoreProperties.containsKey("releaseKeyStore")) {
-                storeFile = file(rootProject.projectDir.canonicalPath + "/" + keystoreProperties.getProperty("releaseKeyStore"))
-                keyAlias = keystoreProperties.getProperty("releaseKeyAlias")
-                keyPassword = keystoreProperties.getProperty("releaseKeyPassword")
-                storePassword = keystoreProperties.getProperty("releaseStorePassword")
-            } else {
-                project.logger.warn("Release signing information not fully loaded from properties. Ensure it's set via environment variables or the properties file is correct.")
-            }
-        }
-
-        create("oss") {
-            val keystoreOSSPropertiesFile = rootProject.file("../../openScale_oss.keystore")
-            val keystoreOSSProperties = Properties()
-            var propertiesLoaded : Boolean
-
-            try {
-                FileInputStream(keystoreOSSPropertiesFile).use { fis ->
-                    keystoreOSSProperties.load(fis)
-                }
-                propertiesLoaded = true
-            } catch (e: FileNotFoundException) {
-                project.logger.warn("OSS Keystore properties file not found: ${keystoreOSSPropertiesFile.absolutePath}. OSS signing might fail if not configured via environment variables.")
-                propertiesLoaded = false
-            }
-
-            if (propertiesLoaded && keystoreOSSProperties.containsKey("releaseKeyStore")) {
-                storeFile = file(rootProject.projectDir.canonicalPath + "/" + keystoreOSSProperties.getProperty("releaseKeyStore"))
-                keyAlias = keystoreOSSProperties.getProperty("releaseKeyAlias")
-                keyPassword = keystoreOSSProperties.getProperty("releaseKeyPassword")
-                storePassword = keystoreOSSProperties.getProperty("releaseStorePassword")
-            } else {
-                project.logger.warn("OSS signing information not fully loaded from properties. Ensure it's set via environment variables or the properties file is correct.")
-            }
-        }
     }
 
     buildTypes {
@@ -98,7 +51,6 @@ android {
         }
 
         release {
-            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -108,22 +60,9 @@ android {
 
         create("beta") {
             initWith(getByName("debug"))
-            signingConfig = signingConfigs.getByName("debug")
             applicationIdSuffix = ".beta"
             versionNameSuffix = "-beta"
-            manifestPlaceholders["appName"] = "openScale beta"
-            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_beta"
-            manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_beta_round"
-        }
-
-        create("oss") {
-            initWith(getByName("release"))
-            signingConfig = signingConfigs.getByName("oss")
-            applicationIdSuffix = ".oss"
-            versionNameSuffix = "-oss"
-            manifestPlaceholders["appName"] = "openScale"
-            manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher_beta"
-            manifestPlaceholders["appRoundIcon"] = "@mipmap/ic_launcher_beta_round"
+            manifestPlaceholders["appName"] = "openScale Redesigned Beta"
         }
     }
 
@@ -132,7 +71,7 @@ android {
         outputs.all {
             val output = this
             if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
-                output.outputFileName = "openScale-${variant.buildType.name}.apk"
+                output.outputFileName = "openScale-Redesigned-${variant.versionName}-${variant.buildType.name}.apk"
             }
         }
     }
