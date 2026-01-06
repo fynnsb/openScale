@@ -642,7 +642,7 @@ fun OverviewScreen(
                                                     )
                                                 }
                                             }
-                                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                                            .padding(horizontal = 8.dp, vertical = 8.dp),
                                         verticalAlignment = Alignment.CenterVertically,
                                     ) {
                                         Box(
@@ -677,7 +677,7 @@ fun OverviewScreen(
                                                 LazyRow(
                                                     modifier = Modifier.fillMaxWidth(),
                                                     contentPadding = PaddingValues(
-                                                        horizontal = 16.dp,
+                                                        horizontal = 8.dp,
                                                     ),
                                                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                                                 ) {
