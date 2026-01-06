@@ -54,6 +54,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.BluetoothSearching
+import androidx.compose.material.icons.automirrored.rounded.BluetoothSearching
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -69,6 +70,15 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.PersonSearch
 import androidx.compose.material.icons.outlined.Link
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Bluetooth
+import androidx.compose.material.icons.rounded.BluetoothConnected
+import androidx.compose.material.icons.rounded.BluetoothDisabled
+import androidx.compose.material.icons.rounded.ExpandLess
+import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material.icons.rounded.Link
+import androidx.compose.material.icons.rounded.PersonAdd
+import androidx.compose.material.icons.rounded.PersonSearch
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -212,7 +222,7 @@ fun determineBluetoothTopBarAction(
     return when {
         // 1) Show non-interactive feedback while a user-initiated operation is ongoing
         isBusy -> TopBarAction(
-            icon = Icons.AutoMirrored.Filled.BluetoothSearching,
+            icon = Icons.AutoMirrored.Rounded.BluetoothSearching,
             contentDescription = context.getString(R.string.bluetooth_action_connecting_disconnecting_desc),
             onClick = {
                 sharedViewModel.showSnackbar(
@@ -231,7 +241,7 @@ fun determineBluetoothTopBarAction(
 
         // 2) No saved device → navigate to Bluetooth settings
         savedAddr == null -> TopBarAction(
-            icon = Icons.Default.Bluetooth,
+            icon = Icons.Rounded.Bluetooth,
             contentDescription = context.getString(R.string.bluetooth_action_no_scale_saved_desc),
             onClick = {
                 sharedViewModel.setPendingReferenceUserForBle(null)
@@ -245,7 +255,7 @@ fun determineBluetoothTopBarAction(
 
         // 3) Connected → offer disconnect
         savedAddr == connectedDevice && connStatusEnum == ConnectionStatus.CONNECTED -> TopBarAction(
-            icon = Icons.Filled.BluetoothConnected,
+            icon = Icons.Rounded.BluetoothConnected,
             contentDescription = context.getString(R.string.bluetooth_action_disconnect_desc, deviceNameForMessage),
             onClick = {
                 sharedViewModel.setPendingReferenceUserForBle(null)
@@ -264,7 +274,7 @@ fun determineBluetoothTopBarAction(
                         connStatusEnum == ConnectionStatus.NONE ||
                         connStatusEnum == ConnectionStatus.FAILED
                 ) -> TopBarAction(
-            icon = Icons.Filled.BluetoothDisabled,
+            icon = Icons.Rounded.BluetoothDisabled,
             contentDescription = context.getString(R.string.bluetooth_action_connect_to_desc, deviceNameForMessage),
             onClick = onClick@{
                 val hasPermissions =
@@ -299,7 +309,7 @@ fun determineBluetoothTopBarAction(
 
         // 5) Fallback
         else -> TopBarAction(
-            icon = Icons.Default.Bluetooth,
+            icon = Icons.Rounded.Bluetooth,
             contentDescription = context.getString(R.string.bluetooth_action_check_settings_desc),
             onClick = {
                 sharedViewModel.setPendingReferenceUserForBle(null)
@@ -514,7 +524,7 @@ fun OverviewScreen(
             // 1. Add "Add Measurement" icon
             actions.add(
                 TopBarAction(
-                    icon = Icons.Default.Add,
+                    icon = Icons.Rounded.Add,
                     contentDescription = context.getString(R.string.action_add_measurement_desc),
                     onClick = {
                         if (selectedUserId != null) {
@@ -636,7 +646,7 @@ fun OverviewScreen(
                                             }
                                         }
                                         Icon(
-                                            imageVector = if (isGoalsSectionExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                            imageVector = if (isGoalsSectionExpanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
                                             contentDescription = if (isGoalsSectionExpanded) stringResource(
                                                 R.string.action_show_less_desc
                                             ) else stringResource(R.string.action_show_more_desc),
@@ -699,7 +709,7 @@ fun OverviewScreen(
                                                         )
                                                     }
                                                     Icon(
-                                                        imageVector = Icons.Outlined.Link,
+                                                        imageVector = Icons.Rounded.Link,
                                                         contentDescription = stringResource(R.string.my_goals_label),
                                                         modifier = Modifier.size(14.dp),
                                                         tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -855,7 +865,7 @@ fun NoUserSelectedCard(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Filled.PersonSearch,
+                    imageVector = Icons.Rounded.PersonSearch,
                     contentDescription = null, // Decorative icon
                     modifier = Modifier.size(64.dp),
                     tint = MaterialTheme.colorScheme.primary
@@ -879,7 +889,7 @@ fun NoUserSelectedCard(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(0.8f) // Take 80% of card width
                 ) {
                     Icon(
-                        Icons.Filled.PersonAdd,
+                        Icons.Rounded.PersonAdd,
                         contentDescription = null, // Decorative icon within button
                         modifier = Modifier.size(ButtonDefaults.IconSize)
                     )

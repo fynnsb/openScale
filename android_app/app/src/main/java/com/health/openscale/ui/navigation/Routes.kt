@@ -20,11 +20,17 @@ package com.health.openscale.ui.navigation
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ShowChart
+import androidx.compose.material.icons.automirrored.rounded.ShowChart
 import androidx.compose.material.icons.filled.Analytics
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TableRows
+import androidx.compose.material.icons.rounded.Analytics
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.QuestionMark
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.TableRows
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.health.openscale.R
 import com.health.openscale.ui.navigation.Routes.NO_TITLE_RESOURCE_ID
@@ -86,13 +92,13 @@ object Routes {
 
     fun getIconForRoute(route: String): ImageVector {
         return when (route) {
-            OVERVIEW -> Icons.Filled.Home
-            GRAPH -> Icons.AutoMirrored.Filled.ShowChart
-            TABLE -> Icons.Filled.TableRows
-            STATISTICS -> Icons.Filled.Analytics
-            SETTINGS -> Icons.Filled.Settings
-            HISTORY -> Icons.Filled.TableRows
-            else -> Icons.Filled.QuestionMark // Default icon for routes not explicitly handled
+            OVERVIEW -> Icons.Rounded.Home
+            GRAPH -> Icons.AutoMirrored.Rounded.ShowChart
+            TABLE -> Icons.Rounded.TableRows
+            STATISTICS -> Icons.Rounded.Analytics
+            SETTINGS -> Icons.Rounded.Settings
+            HISTORY -> Icons.Rounded.TableRows
+            else -> Icons.Rounded.QuestionMark // Default icon for routes not explicitly handled
         }
     }
 }

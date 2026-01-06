@@ -30,6 +30,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.outlined.Flag
+import androidx.compose.material.icons.rounded.DateRange
+import androidx.compose.material.icons.rounded.Flag
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -143,7 +145,7 @@ fun UserGoalChip(
                 if (formattedTargetDate != null) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Default.DateRange,
+                            imageVector = Icons.Rounded.DateRange,
                             contentDescription = stringResource(R.string.goal_target_date_label),
                             modifier = Modifier.size(12.dp),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -160,7 +162,7 @@ fun UserGoalChip(
                 // ROW 2: Goal value (always shown)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Outlined.Flag,
+                        imageVector = Icons.Rounded.Flag,
                         contentDescription = stringResource(R.string.measurement_type_label_goal),
                         modifier = Modifier.size(16.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant

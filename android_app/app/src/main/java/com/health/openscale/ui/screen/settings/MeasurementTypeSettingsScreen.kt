@@ -32,6 +32,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.AlignHorizontalRight
+import androidx.compose.material.icons.automirrored.rounded.AlignHorizontalRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
@@ -44,6 +45,16 @@ import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.outlined.CheckBox
 import androidx.compose.material.icons.outlined.PushPin
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.CheckBox
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.DragHandle
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Functions
+import androidx.compose.material.icons.rounded.SwapHoriz
+import androidx.compose.material.icons.rounded.ToggleOff
+import androidx.compose.material.icons.rounded.ToggleOn
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -165,7 +176,7 @@ fun MeasurementTypeSettingsScreen(
                 listOf(
                     // Enable/Disable Action
                     TopBarAction(
-                        icon = if (areAllSelectedEnabled) Icons.Filled.ToggleOn else Icons.Filled.ToggleOff,
+                        icon = if (areAllSelectedEnabled) Icons.Rounded.ToggleOn else Icons.Rounded.ToggleOff,
                         onClick = {
                             pendingAction = onToggleEnabled
                             val actionVerbRes = if (areAllSelectedEnabled) R.string.action_disable else R.string.action_enable
@@ -187,7 +198,7 @@ fun MeasurementTypeSettingsScreen(
                     ),
                     // Change Axis Action
                     TopBarAction(
-                        icon = Icons.Filled.SwapHoriz,
+                        icon = Icons.Rounded.SwapHoriz,
                         onClick = {
                             pendingAction = onToggleAxis
                             val actionVerbRes = if (areAllSelectedOnRightAxis) R.string.action_move_to_left_axis else R.string.action_move_to_right_axis
@@ -198,7 +209,7 @@ fun MeasurementTypeSettingsScreen(
                     ),
                     // Exit Selection Mode Action
                     TopBarAction(
-                        icon = Icons.Filled.Close,
+                        icon = Icons.Rounded.Close,
                         onClick = { isInSelectionMode = false }
                     )
                 )
@@ -211,11 +222,11 @@ fun MeasurementTypeSettingsScreen(
             sharedViewModel.setTopBarActions(
                 listOf(
                     TopBarAction(
-                        icon = Icons.Outlined.CheckBox,
+                        icon = Icons.Rounded.CheckBox,
                         onClick = { isInSelectionMode = true }
                     ),
                     TopBarAction(
-                        icon = Icons.Default.Add,
+                        icon = Icons.Rounded.Add,
                         onClick = { onEditType(null) }
                     )
                 )
@@ -375,7 +386,7 @@ fun MeasurementTypeSettingsScreen(
 
                                 if (type.isDerived) {
                                     Icon(
-                                        imageVector = Icons.Default.Functions,
+                                        imageVector = Icons.Rounded.Functions,
                                         contentDescription = stringResource(R.string.formula_label_lbm),
                                         modifier = Modifier.size(14.dp),
                                         tint = textColor.copy(alpha = 0.8f)
@@ -384,7 +395,7 @@ fun MeasurementTypeSettingsScreen(
 
                                 if (type.isOnRightYAxis) {
                                     Icon(
-                                        imageVector = Icons.AutoMirrored.Filled.AlignHorizontalRight,
+                                        imageVector = Icons.AutoMirrored.Rounded.AlignHorizontalRight,
                                         contentDescription = stringResource(R.string.measurement_type_label_on_right_y_axis),
                                         modifier = Modifier.size(14.dp),
                                         tint = textColor.copy(alpha = 0.8f)
@@ -398,7 +409,7 @@ fun MeasurementTypeSettingsScreen(
                         // Edit button
                         IconButton(onClick = { onEditType(type.id) }) {
                             Icon(
-                                Icons.Default.Edit,
+                                Icons.Rounded.Edit,
                                 contentDescription = editContentDesc
                             )
                         }
@@ -407,7 +418,7 @@ fun MeasurementTypeSettingsScreen(
                         if (type.key == MeasurementTypeKey.CUSTOM) {
                             IconButton(onClick = { typeToDelete = type }) {
                                 Icon(
-                                    Icons.Default.Delete,
+                                    Icons.Rounded.Delete,
                                     contentDescription = deleteContentDesc,
                                     tint = MaterialTheme.colorScheme.error // Use error color for destructive actions
                                 )
@@ -422,7 +433,7 @@ fun MeasurementTypeSettingsScreen(
                             onClick = {}
                         ) {
                             Icon(
-                                Icons.Default.DragHandle,
+                                Icons.Rounded.DragHandle,
                                 contentDescription = dragHandleContentDesc
                             )
                         }

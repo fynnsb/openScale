@@ -38,6 +38,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Warning
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Save
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -175,7 +178,7 @@ fun MeasurementTypeDetailScreen(
     LaunchedEffect(Unit) {
         sharedViewModel.setTopBarTitle(if (isEdit) titleEdit else titleAdd)
         sharedViewModel.setTopBarAction(
-            TopBarAction(icon = Icons.Default.Save, onClick = {
+            TopBarAction(icon = Icons.Rounded.Save, onClick = {
                 if (name.isBlank()) {
                     Toast.makeText(context, R.string.toast_enter_valid_data, Toast.LENGTH_SHORT).show()
                     return@TopBarAction
@@ -290,7 +293,7 @@ fun MeasurementTypeDetailScreen(
             onDismissRequest = { pendingDialog = null },
             icon= {
                 Icon(
-                    imageVector = Icons.Outlined.Warning,
+                    imageVector = Icons.Rounded.Warning,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.error,
                     modifier = Modifier.size(20.dp)
@@ -560,7 +563,7 @@ fun MeasurementTypeDetailScreen(
             onDismissRequest = { formulaInfoTitle = null; formulaInfoText = null },
             icon = {
                 Icon(
-                    imageVector = Icons.Outlined.Info,
+                    imageVector = Icons.Rounded.Info,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(20.dp)
@@ -693,7 +696,7 @@ private fun <T> FormulaPickerRow(
                     trailingIcon = if (onInfo != null) {
                         {
                             Icon(
-                                imageVector = Icons.Outlined.Info,
+                                imageVector = Icons.Rounded.Info,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(18.dp)

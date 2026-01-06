@@ -37,6 +37,10 @@ import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.DeleteForever
+import androidx.compose.material.icons.rounded.People
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -192,7 +196,7 @@ fun BluetoothDetailScreen(
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 SettingsRow(
                     label = stringResource(R.string.smart_assignment_assignment),
-                    icon = Icons.Default.People,
+                    icon = Icons.Rounded.People,
                     onClick = { scope.launch { bluetoothViewModel.setSmartAssignmentEnabled(!isSmartAssignmentEnabled) } }
                 ) {
                     Switch(
@@ -235,7 +239,7 @@ fun BluetoothDetailScreen(
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 SettingsRow(
                     label = stringResource(R.string.bluetooth_developer_mode),
-                    icon = Icons.Default.BugReport,
+                    icon = Icons.Rounded.BugReport,
                     onClick = {
                         val currentDevice = savedDevice
                         if (currentDevice != null) {
@@ -266,7 +270,7 @@ fun BluetoothDetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Warning,
+                                imageVector = Icons.Rounded.Warning,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.error,
                                 modifier = Modifier.padding(end = 16.dp)
@@ -305,7 +309,7 @@ fun BluetoothDetailScreen(
                 },
             verticalAlignment = Alignment.CenterVertically)
         {
-            Icon(Icons.Default.DeleteForever, contentDescription = null, tint = MaterialTheme.colorScheme.error)
+            Icon(Icons.Rounded.DeleteForever, contentDescription = null, tint = MaterialTheme.colorScheme.error)
             Spacer(Modifier.width(8.dp))
             Text(stringResource(R.string.bluetooth_remove_saved_device), color = MaterialTheme.colorScheme.error)
         }

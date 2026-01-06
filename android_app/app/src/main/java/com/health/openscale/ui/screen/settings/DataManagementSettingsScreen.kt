@@ -54,6 +54,22 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material.icons.filled.WarningAmber
+import androidx.compose.material.icons.rounded.AccountCircle
+import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material.icons.rounded.CloudDownload
+import androidx.compose.material.icons.rounded.CloudUpload
+import androidx.compose.material.icons.rounded.DeleteForever
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Face3
+import androidx.compose.material.icons.rounded.Face6
+import androidx.compose.material.icons.rounded.FileDownload
+import androidx.compose.material.icons.rounded.FileUpload
+import androidx.compose.material.icons.rounded.Folder
+import androidx.compose.material.icons.rounded.FolderOpen
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material.icons.rounded.SwapHoriz
+import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -322,17 +338,17 @@ fun DataManagementSettingsScreen(
 
     val regularDataManagementItems = remember(users, isAnyOperationLoading, isLoadingExport, isLoadingImport, isLoadingBackup, isLoadingRestore, context) {
         buildList {
-            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_export_measurements_csv), Icons.Default.FileDownload, { if (!isAnyOperationLoading) settingsViewModel.startExportProcess() }, users.isNotEmpty() && !isAnyOperationLoading, isLoading = isLoadingExport))
-            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_import_measurements_csv), Icons.Default.FileUpload, { if (!isAnyOperationLoading) settingsViewModel.startImportProcess() }, users.isNotEmpty() && !isAnyOperationLoading, isLoading = isLoadingImport))
-            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_backup_database), Icons.Default.CloudDownload, { if (!isAnyOperationLoading) settingsViewModel.startDatabaseBackup() }, !isAnyOperationLoading, isLoading = isLoadingBackup))
-            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_restore_database), Icons.Filled.CloudUpload, { if (!isAnyOperationLoading) showRestoreConfirmationDialog = true }, !isAnyOperationLoading, isLoading = isLoadingRestore))
+            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_export_measurements_csv), Icons.Rounded.FileDownload, { if (!isAnyOperationLoading) settingsViewModel.startExportProcess() }, users.isNotEmpty() && !isAnyOperationLoading, isLoading = isLoadingExport))
+            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_import_measurements_csv), Icons.Rounded.FileUpload, { if (!isAnyOperationLoading) settingsViewModel.startImportProcess() }, users.isNotEmpty() && !isAnyOperationLoading, isLoading = isLoadingImport))
+            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_backup_database), Icons.Rounded.CloudDownload, { if (!isAnyOperationLoading) settingsViewModel.startDatabaseBackup() }, !isAnyOperationLoading, isLoading = isLoadingBackup))
+            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_restore_database), Icons.Rounded.CloudUpload, { if (!isAnyOperationLoading) showRestoreConfirmationDialog = true }, !isAnyOperationLoading, isLoading = isLoadingRestore))
         }
     }
 
     val destructiveDataManagementItems = remember(users, isAnyOperationLoading, isLoadingDeletion, isLoadingEntireDatabaseDeletion, context) {
         buildList {
-            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_delete_all_measurement_data), Icons.Default.DeleteForever, { if (!isAnyOperationLoading) settingsViewModel.initiateDeleteAllUserDataProcess() }, users.isNotEmpty() && !isAnyOperationLoading, true, isLoadingDeletion))
-            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_delete_entire_database), Icons.Default.WarningAmber, { if (!isAnyOperationLoading) settingsViewModel.initiateDeleteEntireDatabaseProcess() }, !isAnyOperationLoading, true, isLoadingEntireDatabaseDeletion))
+            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_delete_all_measurement_data), Icons.Rounded.DeleteForever, { if (!isAnyOperationLoading) settingsViewModel.initiateDeleteAllUserDataProcess() }, users.isNotEmpty() && !isAnyOperationLoading, true, isLoadingDeletion))
+            add(DataManagementSettingListItem.ActionItem(context.getString(R.string.settings_delete_entire_database), Icons.Rounded.WarningAmber, { if (!isAnyOperationLoading) settingsViewModel.initiateDeleteEntireDatabaseProcess() }, !isAnyOperationLoading, true, isLoadingEntireDatabaseDeletion))
         }
     }
 
@@ -370,7 +386,7 @@ fun DataManagementSettingsScreen(
                 enabled = !isAnyOperationLoading,
                 customLeadingContent = {
                     Icon(
-                        Icons.Filled.Schedule,
+                        Icons.Rounded.Schedule,
                         contentDescription = stringResource(R.string.content_desc_auto_backups_toggle),
                         tint = if (isAutoBackupEffectivelyEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -405,7 +421,7 @@ fun DataManagementSettingsScreen(
                         }
                     },
                     enabled = !isAnyOperationLoading,
-                    customLeadingContent = { Icon(Icons.Filled.Folder, contentDescription = stringResource(R.string.content_desc_backup_location_icon)) },
+                    customLeadingContent = { Icon(Icons.Rounded.Folder, contentDescription = stringResource(R.string.content_desc_backup_location_icon)) },
                     trailingContent = {
                         Row(horizontalArrangement = Arrangement.End) {
                             if (canOpenSelectedBackupLocation && autoBackupLocationUriString != null) {
@@ -426,7 +442,7 @@ fun DataManagementSettingsScreen(
                                     },
                                     enabled = !isAnyOperationLoading
                                 ) {
-                                    Icon(Icons.Filled.FolderOpen, contentDescription = stringResource(R.string.content_desc_open_backup_location_icon))
+                                    Icon(Icons.Rounded.FolderOpen, contentDescription = stringResource(R.string.content_desc_open_backup_location_icon))
                                 }
                             }
                             IconButton(
@@ -437,7 +453,7 @@ fun DataManagementSettingsScreen(
                                 },
                                 enabled = !isAnyOperationLoading
                             ) {
-                                Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.content_desc_change_backup_location_icon))
+                                Icon(Icons.Rounded.Edit, contentDescription = stringResource(R.string.content_desc_change_backup_location_icon))
                             }
                         }
                     }
@@ -453,7 +469,7 @@ fun DataManagementSettingsScreen(
                     supportingText = lastBackupStatusText,
                     onClick = { /* Could show more details or trigger a manual sync if needed */ },
                     enabled = !isAnyOperationLoading,
-                    customLeadingContent = { Icon(Icons.Filled.Info, contentDescription = stringResource(R.string.content_desc_backup_status_icon)) }
+                    customLeadingContent = { Icon(Icons.Rounded.Info, contentDescription = stringResource(R.string.content_desc_backup_status_icon)) }
                 )
             }
             item {
@@ -462,8 +478,8 @@ fun DataManagementSettingsScreen(
                     supportingText = selectedBackupIntervalDisplay,
                     onClick = { if (!isAnyOperationLoading) showBackupIntervalDialog = true },
                     enabled = !isAnyOperationLoading,
-                    customLeadingContent = { Icon(Icons.Filled.Schedule, contentDescription = stringResource(R.string.content_desc_backup_interval_icon)) },
-                    trailingContent = { Icon(Icons.Filled.ArrowDropDown, contentDescription = stringResource(R.string.content_desc_change_interval_icon)) }
+                    customLeadingContent = { Icon(Icons.Rounded.Schedule, contentDescription = stringResource(R.string.content_desc_backup_interval_icon)) },
+                    trailingContent = { Icon(Icons.Rounded.ArrowDropDown, contentDescription = stringResource(R.string.content_desc_change_interval_icon)) }
                 )
             }
             item {
@@ -474,7 +490,7 @@ fun DataManagementSettingsScreen(
                         coroutineScope.launch { settingsViewModel.setAutoBackupCreateNewFile(!autoBackupCreateNewFile) }
                     }},
                     enabled = !isAnyOperationLoading,
-                    customLeadingContent = { Icon(Icons.Filled.SwapHoriz, contentDescription = stringResource(R.string.content_desc_backup_behavior_icon)) },
+                    customLeadingContent = { Icon(Icons.Rounded.SwapHoriz, contentDescription = stringResource(R.string.content_desc_backup_behavior_icon)) },
                     trailingContent = {
                         Switch(
                             checked = autoBackupCreateNewFile,
@@ -521,7 +537,7 @@ fun DataManagementSettingsScreen(
     if (showDeleteEntireDatabaseConfirmationDialog) {
         AlertDialog(
             onDismissRequest = { if (!isLoadingEntireDatabaseDeletion) settingsViewModel.cancelDeleteEntireDatabaseConfirmation() },
-            icon = { Icon(Icons.Filled.WarningAmber, contentDescription = stringResource(R.string.content_desc_warning_icon), tint = MaterialTheme.colorScheme.error) },
+            icon = { Icon(Icons.Rounded.WarningAmber, contentDescription = stringResource(R.string.content_desc_warning_icon), tint = MaterialTheme.colorScheme.error) },
             title = { Text(stringResource(R.string.dialog_title_delete_entire_database_confirmation), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.error) },
             text = { Text(stringResource(R.string.dialog_message_delete_entire_database_confirmation)) },
             confirmButton = { TextButton({ settingsViewModel.confirmDeleteEntireDatabase() }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error), enabled = !isLoadingEntireDatabaseDeletion) { if (isLoadingEntireDatabaseDeletion) CircularProgressIndicator(Modifier.size(ButtonDefaults.IconSize), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.error) else Text(stringResource(R.string.button_yes_delete_all)) } },
@@ -545,7 +561,7 @@ fun DataManagementSettingsScreen(
         userPendingDeletion?.let { user ->
             AlertDialog(
                 onDismissRequest = { if (!isLoadingDeletion) settingsViewModel.cancelDeleteConfirmation() },
-                icon = { Icon(Icons.Filled.DeleteForever, contentDescription = stringResource(R.string.content_desc_delete_icon), tint = MaterialTheme.colorScheme.error) },
+                icon = { Icon(Icons.Rounded.DeleteForever, contentDescription = stringResource(R.string.content_desc_delete_icon), tint = MaterialTheme.colorScheme.error) },
                 title = { Text(stringResource(R.string.dialog_title_delete_user_data_confirmation), fontWeight = FontWeight.Bold) },
                 text = { Text(stringResource(R.string.dialog_message_delete_user_data_confirmation, user.name)) },
                 confirmButton = { TextButton({ settingsViewModel.confirmActualDeletion() }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error), enabled = !isLoadingDeletion) { if (isLoadingDeletion) CircularProgressIndicator(Modifier.size(ButtonDefaults.IconSize), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.error) else Text(stringResource(R.string.button_yes_delete_all)) } },
@@ -557,7 +573,7 @@ fun DataManagementSettingsScreen(
     if (showRestoreConfirmationDialog) {
         AlertDialog(
             onDismissRequest = { if (!isLoadingRestore) showRestoreConfirmationDialog = false },
-            icon = { Icon(Icons.Filled.CloudUpload, contentDescription = stringResource(R.string.content_desc_restore_icon)) },
+            icon = { Icon(Icons.Rounded.CloudUpload, contentDescription = stringResource(R.string.content_desc_restore_icon)) },
             title = { Text(stringResource(R.string.dialog_title_restore_database_confirmation), fontWeight = FontWeight.Bold) },
             text = { Text(stringResource(R.string.dialog_message_restore_database_confirmation)) },
             confirmButton = { TextButton({ showRestoreConfirmationDialog = false; settingsViewModel.startDatabaseRestore() /* This now triggers SAF event */ }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error), enabled = !isLoadingRestore) { if (isLoadingRestore) CircularProgressIndicator(Modifier.size(ButtonDefaults.IconSize), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.error) else Text(stringResource(R.string.button_yes_restore)) } },
@@ -690,11 +706,11 @@ fun UserSelectionDialog(
 
                     val (icon, tint) = when (user.gender) {
                         GenderType.MALE ->
-                            Icons.Default.Face6 to MaterialTheme.colorScheme.primary
+                            Icons.Rounded.Face6 to MaterialTheme.colorScheme.primary
                         GenderType.FEMALE ->
-                            Icons.Default.Face3 to MaterialTheme.colorScheme.secondary
+                            Icons.Rounded.Face3 to MaterialTheme.colorScheme.secondary
                         else ->
-                            Icons.Filled.AccountCircle to MaterialTheme.colorScheme.onSurfaceVariant
+                            Icons.Rounded.AccountCircle to MaterialTheme.colorScheme.onSurfaceVariant
                     }
 
                     val textColor =

@@ -28,6 +28,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -91,7 +93,7 @@ fun TimeInputDialog(
             ) {
                 IconButton(onClick = { showTimePicker = !showTimePicker }) {
                     Icon(
-                        imageVector = if (showTimePicker) Icons.Default.Edit else Icons.Default.Schedule,
+                        imageVector = if (showTimePicker) Icons.Rounded.Edit else Icons.Rounded.Schedule,
                         contentDescription = stringResource(R.string.content_desc_change_interval_icon)
                     )
                 }

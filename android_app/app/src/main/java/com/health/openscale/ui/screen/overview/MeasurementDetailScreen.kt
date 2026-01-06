@@ -37,6 +37,10 @@ import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -213,7 +217,7 @@ fun MeasurementDetailScreen(
     LaunchedEffect(currentUserIdState, measurementTimestampState, valuesState.toMap()) {
         sharedViewModel.setTopBarAction(
             TopBarAction(
-                icon = Icons.Default.Save,
+                icon = Icons.Rounded.Save,
                 contentDescription = context.getString(R.string.action_save_measurement),
                 onClick = {
                     val effectiveUserIdForSave = pendingUserId ?: currentUserIdState
@@ -602,10 +606,10 @@ fun MeasurementValueEditRow(
         if (showIncrementDecrement && onIncrement != null && onDecrement != null && !type.isDerived) {
             Column { // Layout for increment/decrement buttons
                 IconButton(onClick = onIncrement, modifier = Modifier.size(24.dp)) {
-                    Icon(Icons.Default.ArrowUpward, contentDescription = stringResource(R.string.content_desc_increase_value, type.getDisplayName(context)))
+                    Icon(Icons.Rounded.ArrowUpward, contentDescription = stringResource(R.string.content_desc_increase_value, type.getDisplayName(context)))
                 }
                 IconButton(onClick = onDecrement, modifier = Modifier.size(24.dp)) {
-                    Icon(Icons.Default.ArrowDownward, contentDescription = stringResource(R.string.content_desc_decrease_value, type.getDisplayName(context)))
+                    Icon(Icons.Rounded.ArrowDownward, contentDescription = stringResource(R.string.content_desc_decrease_value, type.getDisplayName(context)))
                 }
             }
         }
@@ -614,7 +618,7 @@ fun MeasurementValueEditRow(
         // Show edit button only if the type is not derived.
         if (!type.isDerived) {
             IconButton(onClick = onEditClick, modifier = Modifier.size(36.dp)) {
-                Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.content_desc_edit_value, type.getDisplayName(context)))
+                Icon(Icons.Rounded.Edit, contentDescription = stringResource(R.string.content_desc_edit_value, type.getDisplayName(context)))
             }
         }
     }

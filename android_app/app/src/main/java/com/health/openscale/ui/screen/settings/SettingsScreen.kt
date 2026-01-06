@@ -26,6 +26,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ShowChart
+import androidx.compose.material.icons.automirrored.rounded.ShowChart
 import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
@@ -33,6 +34,13 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShowChart
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.rounded.Bluetooth
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.ShowChart
+import androidx.compose.material.icons.rounded.Storage
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -90,43 +98,43 @@ fun SettingsScreen(
     val items = listOf(
         SettingsItem(
             label = generalSettingsLabel,
-            icon = Icons.Default.Tune,
+            icon = Icons.Rounded.Tune,
             route = Routes.GENERAL_SETTINGS,
             contentDescription = generalSettingsLabel
         ),
         SettingsItem(
             label = userSettingsLabel,
-            icon = Icons.Default.Person,
+            icon = Icons.Rounded.Person,
             route = Routes.USER_SETTINGS,
             contentDescription = userSettingsLabel
         ),
         SettingsItem(
             label = measurementTypesLabel,
-            icon = Icons.Default.Edit,
+            icon = Icons.Rounded.Edit,
             route = Routes.MEASUREMENT_TYPES,
             contentDescription = measurementTypesLabel
         ),
         SettingsItem(
             label = bluetoothLabel,
-            icon = Icons.Filled.Bluetooth,
+            icon = Icons.Rounded.Bluetooth,
             route = Routes.BLUETOOTH_SETTINGS,
             contentDescription = bluetoothLabel
         ),
         SettingsItem(
             label = chartSettingsLabel,
-            icon = Icons.AutoMirrored.Filled.ShowChart,
+            icon = Icons.AutoMirrored.Rounded.ShowChart,
             route = Routes.CHART_SETTINGS,
             contentDescription = chartSettingsLabel
         ),
         SettingsItem(
             label = dataManagementLabel,
-            icon = Icons.Filled.Storage,
+            icon = Icons.Rounded.Storage,
             route = Routes.DATA_MANAGEMENT_SETTINGS,
             contentDescription = dataManagementLabel
         ),
         SettingsItem(
             label = aboutLabel,
-            icon = Icons.Default.Info,
+            icon = Icons.Rounded.Info,
             route = Routes.ABOUT_SETTINGS,
             contentDescription = aboutLabel
         )

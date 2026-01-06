@@ -94,6 +94,15 @@ import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.Assessment
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Error
+import androidx.compose.material.icons.rounded.ExpandLess
+import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.runtime.DisposableEffect
@@ -297,7 +306,7 @@ fun HistoryScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Assessment, // Icon suggesting measurement/stats
+                        imageVector = Icons.Rounded.Assessment, // Icon suggesting measurement/stats
                         contentDescription = null, // Decorative icon
                         modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.secondary
@@ -329,7 +338,7 @@ fun HistoryScreen(
                         enabled = selectedUserId != null // Button is enabled only if a user is selected
                     ) {
                         Icon(
-                            Icons.Filled.Add,
+                            Icons.Rounded.Add,
                             contentDescription = null, // Decorative icon within button
                             modifier = Modifier.size(ButtonDefaults.IconSize)
                         )
@@ -429,7 +438,7 @@ fun HistoryScreen(
 
                     IconButton(onClick = onEdit, modifier = Modifier.size(iconButtonSize)) {
                         Icon(
-                            Icons.Default.Edit,
+                            Icons.Rounded.Edit,
                             contentDescription = stringResource(
                                 R.string.action_edit_measurement_desc,
                                 dateFormatted
@@ -439,7 +448,7 @@ fun HistoryScreen(
                     }
                     IconButton(onClick = onDelete, modifier = Modifier.size(iconButtonSize)) {
                         Icon(
-                            Icons.Default.Delete,
+                            Icons.Rounded.Delete,
                             contentDescription = stringResource(
                                 R.string.action_delete_measurement_desc,
                                 dateFormatted
@@ -456,7 +465,7 @@ fun HistoryScreen(
                             modifier = Modifier.size(iconButtonSize)
                         ) {
                             Icon(
-                                imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                                imageVector = if (isExpanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
                                 contentDescription = stringResource(if (isExpanded) R.string.action_show_less_desc else R.string.action_show_more_desc)
                             )
                         }
@@ -534,7 +543,7 @@ fun HistoryScreen(
                         shape = MaterialTheme.shapes.extraSmall // Less rounded corners for a subtle look
                     ) {
                         Icon(
-                            imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                            imageVector = if (isExpanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
                             tint = MaterialTheme.colorScheme.secondary, // Use secondary color for emphasis
                             contentDescription = stringResource(if (isExpanded) R.string.action_show_less_desc else R.string.action_show_more_desc)
                         )
@@ -695,8 +704,8 @@ fun HistoryScreen(
                         Spacer(modifier = Modifier.height(1.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             val trendIconVector = when (trend) {
-                                Trend.UP -> Icons.Filled.ArrowUpward
-                                Trend.DOWN -> Icons.Filled.ArrowDownward
+                                Trend.UP -> Icons.Rounded.ArrowUpward
+                                Trend.DOWN -> Icons.Rounded.ArrowDownward
                                 Trend.NONE -> null
                                 else -> null
                             }
@@ -771,7 +780,7 @@ fun HistoryScreen(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Filled.Error,
+                    imageVector = Icons.Rounded.Error,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onErrorContainer
                 )

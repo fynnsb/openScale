@@ -30,6 +30,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
@@ -189,7 +192,7 @@ private fun WidgetConfigScreen(
                 title = { Text(stringResource(R.string.measurement_type_settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onCancel) {
-                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.cancel_button))
+                        Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.cancel_button))
                     }
                 },
                 actions = {
@@ -197,7 +200,7 @@ private fun WidgetConfigScreen(
                         onClick = { onConfirm(selectedId, selectedTheme) },
                         enabled = selectedId != null
                     ) {
-                        Icon(Icons.Default.Done, contentDescription = stringResource(R.string.confirm_button))
+                        Icon(Icons.Rounded.Done, contentDescription = stringResource(R.string.confirm_button))
                     }
                 }
             )
@@ -253,7 +256,7 @@ private fun ThemePicker(
                 selected = selected == item,
                 onClick = { onSelected(item) },
                 shape = SegmentedButtonDefaults.itemShape(index, options.size),
-                icon = { if (selected == item) Icon(Icons.Default.Check, null) }
+                icon = { if (selected == item) Icon(Icons.Rounded.Check, null) }
             ) { Text(text = label) }
         }
     }
@@ -282,6 +285,6 @@ private fun TypeRow(type: MeasurementType, selected: Boolean, onClick: () -> Uni
                 style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
             )
         }
-        if (selected) Icon(Icons.Default.Check, null, tint = MaterialTheme.colorScheme.primary)
+        if (selected) Icon(Icons.Rounded.Check, null, tint = MaterialTheme.colorScheme.primary)
     }
 }

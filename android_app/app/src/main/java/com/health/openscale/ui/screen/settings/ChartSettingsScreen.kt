@@ -33,6 +33,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -422,7 +424,7 @@ private fun IntegerStepper(
                 enabled = value > valueRange.first
             ) {
                 Icon(
-                    imageVector = Icons.Default.Remove,
+                    imageVector = Icons.Rounded.Remove,
                     contentDescription = stringResource(R.string.trend_decreased_desc, label)
                 )
             }
@@ -439,7 +441,7 @@ private fun IntegerStepper(
                 enabled = value < valueRange.last
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    imageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(R.string.trend_increased_desc, label)
                 )
             }

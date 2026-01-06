@@ -7,6 +7,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -65,12 +67,12 @@ private fun normalizeStLb(st: Int, lb: Int): Pair<Int, Int> {
 private fun ValueStepper(onStep: (isIncrement: Boolean) -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
-            imageVector = Icons.Default.KeyboardArrowUp,
+            imageVector = Icons.Rounded.KeyboardArrowUp,
             contentDescription = stringResource(R.string.content_desc_increase_value, ""),
             modifier = Modifier.size(24.dp).clickable { onStep(true) }
         )
         Icon(
-            imageVector = Icons.Default.KeyboardArrowDown,
+            imageVector = Icons.Rounded.KeyboardArrowDown,
             contentDescription = stringResource(R.string.content_desc_decrease_value, ""),
             modifier = Modifier.size(24.dp).clickable { onStep(false) }
         )

@@ -42,13 +42,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.HowToReg
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.HowToReg
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.People
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -240,11 +246,11 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
         when (interactionEvent.interactionType) {
             UserInteractionType.CHOOSE_USER -> {
                 dialogTitle = stringResource(R.string.dialog_bt_interaction_title_choose_user)
-                dialogIcon = { Icon(Icons.Filled.People, contentDescription = stringResource(R.string.dialog_bt_icon_desc_choose_user)) }
+                dialogIcon = { Icon(Icons.Rounded.People, contentDescription = stringResource(R.string.dialog_bt_icon_desc_choose_user)) }
             }
             UserInteractionType.ENTER_CONSENT -> {
                 dialogTitle = stringResource(R.string.dialog_bt_interaction_title_enter_consent)
-                dialogIcon = { Icon(Icons.Filled.HowToReg, contentDescription = stringResource(R.string.dialog_bt_icon_desc_enter_consent)) }
+                dialogIcon = { Icon(Icons.Rounded.HowToReg, contentDescription = stringResource(R.string.dialog_bt_icon_desc_enter_consent)) }
             }
             // else -> { /* Handle unknown types or provide defaults */ } // Optional
         }
@@ -392,7 +398,7 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Filled.Info,
+                            imageVector = Icons.Rounded.Info,
                             contentDescription = stringResource(R.string.app_logo_content_description), // Accessibility.
                             tint = LocalContentColor.current // Uses the contentColor from Snackbar.
                         )
@@ -461,7 +467,7 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                     if (canNavigateBack) {
                         IconButton(onClick = { navController.navigateUp() }) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                                 null
                             )
                         }
@@ -506,7 +512,7 @@ fun AppNavigation(sharedViewModel: SharedViewModel) {
                     if (currentRoute in mainRoutes && currentRoute != Routes.SETTINGS) {
                         IconButton(onClick = { navController.navigate(Routes.SETTINGS) }) {
                             Icon(
-                                imageVector = Icons.Default.Settings,
+                                imageVector = Icons.Rounded.Settings,
                                 contentDescription = stringResource(R.string.route_title_settings)
                             )
                         }
@@ -705,7 +711,7 @@ fun UserDropdownAsAction(
 
     Box(modifier = modifier) { // Box is used to anchor the DropdownMenu.
         IconButton(onClick = { expanded = true }) {
-            val iconResource = selectedUser?.icon?.resource ?: IconResource.VectorResource(Icons.Filled.AccountCircle)
+            val iconResource = selectedUser?.icon?.resource ?: IconResource.VectorResource(Icons.Rounded.AccountCircle)
 
             when (iconResource) {
                 is IconResource.VectorResource -> {
@@ -736,7 +742,7 @@ fun UserDropdownAsAction(
                     leadingIcon = { // Show a checkmark next to the currently selected user.
                         if (user.id == selectedUser?.id) {
                             Icon(
-                                imageVector = Icons.Filled.Check,
+                                imageVector = Icons.Rounded.Check,
                                 contentDescription = stringResource(R.string.content_desc_selected_user_indicator)
                             )
                         }
@@ -752,7 +758,7 @@ fun UserDropdownAsAction(
                 },
                 leadingIcon = { // Icon for the "Manage Users" option.
                     Icon(
-                        imageVector = Icons.Filled.Settings,
+                        imageVector = Icons.Rounded.Settings,
                         contentDescription = null // Decorative icon, as text already describes the action.
                     )
                 }

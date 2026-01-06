@@ -28,9 +28,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
+import androidx.compose.material.icons.automirrored.rounded.Launch
 import androidx.compose.material.icons.filled.Business
 import androidx.compose.material.icons.filled.Copyright
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.rounded.Business
+import androidx.compose.material.icons.rounded.Copyright
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
@@ -120,13 +124,13 @@ fun AboutScreen(
         InfoListItem(
             headlineText = "fynn.sb",
             supportingText = stringResource(R.string.fork_maintainer_label),
-            leadingIconVector = Icons.Filled.Business,
+            leadingIconVector = Icons.Rounded.Business,
             leadingIconContentDescription = stringResource(R.string.fork_maintainer_icon_content_description)
         )
         InfoListItem(
             headlineText = stringResource(R.string.fork_project_homepage_display),
             supportingText = stringResource(R.string.fork_project_page_label),
-            leadingIconVector = Icons.Filled.Home,
+            leadingIconVector = Icons.Rounded.Home,
             leadingIconContentDescription = stringResource(R.string.homepage_icon_content_description),
             url = forkHomepageUrl,
             uriHandler = uriHandler
@@ -134,13 +138,13 @@ fun AboutScreen(
         InfoListItem(
             headlineText = "olie.xdev",
             supportingText = stringResource(R.string.maintainer_label),
-            leadingIconVector = Icons.Filled.Business,
+            leadingIconVector = Icons.Rounded.Business,
             leadingIconContentDescription = stringResource(R.string.maintainer_icon_content_description)
         )
         InfoListItem(
             headlineText = stringResource(R.string.project_homepage_display),
             supportingText = stringResource(R.string.official_project_page_label),
-            leadingIconVector = Icons.Filled.Home,
+            leadingIconVector = Icons.Rounded.Home,
             leadingIconContentDescription = stringResource(R.string.homepage_icon_content_description),
             url = projectHomepageUrl,
             uriHandler = uriHandler
@@ -148,7 +152,7 @@ fun AboutScreen(
         InfoListItem(
             headlineText = "GNU GPL v3.0 or newer",
             supportingText = stringResource(R.string.software_license_details_label),
-            leadingIconVector = Icons.Filled.Copyright,
+            leadingIconVector = Icons.Rounded.Copyright,
             leadingIconContentDescription = stringResource(R.string.license_icon_content_description),
             url = licenseUrl,
             uriHandler = uriHandler
@@ -207,7 +211,7 @@ private fun InfoListItem(
         trailingContent = if (url != null) {
             {
                 Icon(
-                    Icons.AutoMirrored.Filled.Launch,
+                    Icons.AutoMirrored.Rounded.Launch,
                     contentDescription = stringResource(R.string.open_link_content_description), // Specific description
                     tint = MaterialTheme.colorScheme.primary
                 )

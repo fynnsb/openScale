@@ -39,6 +39,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.BluetoothSearching
+import androidx.compose.material.icons.automirrored.rounded.BluetoothSearching
 import androidx.compose.material.icons.filled.BluetoothDisabled
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ErrorOutline
@@ -48,6 +49,14 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.rounded.BluetoothDisabled
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.ErrorOutline
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -260,7 +269,7 @@ fun BluetoothScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 IconButton(onClick = { navController.navigate(Routes.BLUETOOTH_DETAIL) }) {
                                     Icon(
-                                        imageVector = Icons.Default.Settings,
+                                        imageVector = Icons.Rounded.Settings,
                                         contentDescription = stringResource(R.string.content_desc_edit_type),
                                         tint = MaterialTheme.colorScheme.primary
                                     )
@@ -395,7 +404,7 @@ fun BluetoothScreen(
             } else if (!isScanning) {
                 // Only show empty state when not scanning and nothing was found
                 EmptyState(
-                    icon = Icons.AutoMirrored.Filled.BluetoothSearching,
+                    icon = Icons.AutoMirrored.Rounded.BluetoothSearching,
                     message = stringResource(R.string.no_devices_found_start_scan)
                 )
             }
@@ -424,7 +433,7 @@ private fun ScanButton(
             Text(stringResource(R.string.stop_scan_button))
         } else {
             Icon(
-                imageVector = Icons.Filled.Search,
+                imageVector = Icons.Rounded.Search,
                 contentDescription = stringResource(R.string.search_for_scales_button_desc)
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -447,7 +456,7 @@ private fun CompatibilityAlertDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        icon = { Icon(Icons.Default.Info, contentDescription = null) },
+        icon = { Icon(Icons.Rounded.Info, contentDescription = null) },
         title = { Text(stringResource(R.string.compatibility_dialog_title)) },
         text = {
             Column {
@@ -561,7 +570,7 @@ fun DeviceCardItem(
                     if (isCurrentlySaved) {
                         Spacer(Modifier.width(8.dp))
                         Icon(
-                            imageVector = Icons.Filled.Star,
+                            imageVector = Icons.Rounded.Star,
                             contentDescription = stringResource(R.string.saved_scale_icon_desc),
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(20.dp)
@@ -575,7 +584,7 @@ fun DeviceCardItem(
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = if (deviceInfo.isSupported) Icons.Filled.CheckCircle else Icons.Filled.ErrorOutline,
+                        imageVector = if (deviceInfo.isSupported) Icons.Rounded.CheckCircle else Icons.Rounded.ErrorOutline,
                         contentDescription = if (deviceInfo.isSupported)
                             stringResource(R.string.supported_icon_desc)
                         else
@@ -621,7 +630,7 @@ fun PermissionRequestCard(onGrantPermissions: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
-                Icons.Filled.ErrorOutline,
+                Icons.Rounded.ErrorOutline,
                 contentDescription = stringResource(R.string.permissions_required_icon_desc),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(40.dp)
@@ -657,7 +666,7 @@ fun EnableBluetoothCard(onEnableBluetooth: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
-                Icons.Filled.BluetoothDisabled,
+                Icons.Rounded.BluetoothDisabled,
                 contentDescription = stringResource(R.string.bluetooth_disabled_icon_desc),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(40.dp)
@@ -691,7 +700,7 @@ fun ErrorCard(errorMsg: String) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                Icons.Filled.Warning,
+                Icons.Rounded.Warning,
                 contentDescription = stringResource(R.string.error_icon_desc),
                 tint = MaterialTheme.colorScheme.error
             )

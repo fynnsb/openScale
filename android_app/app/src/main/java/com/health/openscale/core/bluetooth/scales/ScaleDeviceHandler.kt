@@ -27,6 +27,13 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.outlined.BatteryStd
+import androidx.compose.material.icons.rounded.AutoGraph
+import androidx.compose.material.icons.rounded.BatteryStd
+import androidx.compose.material.icons.rounded.FitnessCenter
+import androidx.compose.material.icons.rounded.Group
+import androidx.compose.material.icons.rounded.History
+import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.health.openscale.R
 import com.health.openscale.core.bluetooth.BluetoothEvent
@@ -61,13 +68,13 @@ enum class DeviceCapability(
     @StringRes val labelRes: Int,
     val icon: ImageVector
 ) {
-    BODY_COMPOSITION( R.string.cap_body_composition, Icons.Filled.FitnessCenter ),
-    TIME_SYNC(        R.string.cap_time_sync,        Icons.Filled.Schedule ),
-    USER_SYNC(        R.string.cap_user_sync,        Icons.Filled.Group ),
-    HISTORY_READ(     R.string.cap_history_read,     Icons.Filled.History ),
-    LIVE_WEIGHT_STREAM(R.string.cap_live_weight,     Icons.Filled.AutoGraph ),
-    UNIT_CONFIG(      R.string.cap_unit_config,      Icons.Filled.Tune ),
-    BATTERY_LEVEL(    R.string.cap_battery,          Icons.Outlined.BatteryStd )
+    BODY_COMPOSITION( R.string.cap_body_composition, Icons.Rounded.FitnessCenter ),
+    TIME_SYNC(        R.string.cap_time_sync,        Icons.Rounded.Schedule ),
+    USER_SYNC(        R.string.cap_user_sync,        Icons.Rounded.Group ),
+    HISTORY_READ(     R.string.cap_history_read,     Icons.Rounded.History ),
+    LIVE_WEIGHT_STREAM(R.string.cap_live_weight,     Icons.Rounded.AutoGraph ),
+    UNIT_CONFIG(      R.string.cap_unit_config,      Icons.Rounded.Tune ),
+    BATTERY_LEVEL(    R.string.cap_battery,          Icons.Rounded.BatteryStd )
 }
 
 /**

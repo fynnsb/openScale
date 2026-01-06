@@ -37,6 +37,10 @@ import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.rounded.CalendarToday
+import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.CheckBoxOutlineBlank
+import androidx.compose.material.icons.rounded.FilterList
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
@@ -588,7 +592,7 @@ fun MeasurementChart(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.CalendarToday,
+                    imageVector = Icons.Rounded.CalendarToday,
                     contentDescription = stringResource(R.string.content_description_time_range_icon),
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(end = 8.dp)
@@ -975,7 +979,7 @@ fun provideFilterTopBarAction(
     }
 
     return TopBarAction(
-        icon = Icons.Default.FilterList,
+        icon = Icons.Rounded.FilterList,
         contentDescription = stringResource(R.string.content_description_filter_chart_data), // Accessibility
         onClick = { showMenuState = !showMenuState }
     ) { // Content of the DropdownMenu
@@ -990,7 +994,7 @@ fun provideFilterTopBarAction(
                     leadingIcon = {
                         if (activeTimeRange == timeRange) {
                             Icon(
-                                imageVector = Icons.Default.Check,
+                                imageVector = Icons.Rounded.Check,
                                 contentDescription = stringResource(
                                     R.string.content_description_time_range_selected,
                                     timeRange.getDisplayName(LocalContext.current) // Same i18n consideration as above
@@ -1023,12 +1027,12 @@ fun provideFilterTopBarAction(
                     leadingIcon = {
                         if (currentShowFilterRowSetting) {
                             Icon(
-                                imageVector = Icons.Default.Check, // Indicates filter row is currently SHOWN
+                                imageVector = Icons.Rounded.Check, // Indicates filter row is currently SHOWN
                                 contentDescription = stringResource(R.string.content_description_measurement_filter_visible)
                             )
                         } else {
                             Icon(
-                                imageVector = Icons.Filled.CheckBoxOutlineBlank, // Indicates filter row is HIDDEN
+                                imageVector = Icons.Rounded.CheckBoxOutlineBlank, // Indicates filter row is HIDDEN
                                 contentDescription = stringResource(R.string.content_description_measurement_filter_hidden)
                             )
                         }

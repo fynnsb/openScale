@@ -25,6 +25,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SignalCellularAlt
 import androidx.compose.material.icons.filled.SignalCellularAlt1Bar
 import androidx.compose.material.icons.outlined.SignalCellularAlt2Bar
+import androidx.compose.material.icons.rounded.SignalCellularAlt
+import androidx.compose.material.icons.rounded.SignalCellularAlt1Bar
+import androidx.compose.material.icons.rounded.SignalCellularAlt2Bar
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.key.key
 import com.health.openscale.R
@@ -115,15 +118,15 @@ enum class TuningProfile(
 ) {
     Conservative(
         labelRes = R.string.tuning_conservative,
-        icon = Icons.Filled.SignalCellularAlt1Bar
+        icon = Icons.Rounded.SignalCellularAlt1Bar
     ),
     Balanced(
         labelRes = R.string.tuning_balanced,
-        icon = Icons.Outlined.SignalCellularAlt2Bar
+        icon = Icons.Rounded.SignalCellularAlt2Bar
     ),
     Aggressive(
         labelRes = R.string.tuning_aggressive,
-        icon = Icons.Filled.SignalCellularAlt
+        icon = Icons.Rounded.SignalCellularAlt
     )
 }
 fun TuningProfile.forGatt(): BleGattTuning = when (this) {

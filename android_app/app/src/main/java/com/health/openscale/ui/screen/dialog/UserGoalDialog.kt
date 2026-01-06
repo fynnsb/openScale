@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.rounded.DateRange
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -240,7 +242,7 @@ fun UserGoalDialog(
                                             },
                                         ) {
                                             Icon(
-                                                imageVector = Icons.Filled.Edit,
+                                                imageVector = Icons.Rounded.Edit,
                                                 modifier = Modifier.size(20.dp),
                                                 contentDescription = stringResource(R.string.content_desc_edit_type)
                                             )
@@ -303,7 +305,7 @@ fun UserGoalDialog(
                             modifier = Modifier.fillMaxWidth(),
                             trailingIcon = {
                                 Icon(
-                                    imageVector = Icons.Default.DateRange,
+                                    imageVector = Icons.Rounded.DateRange,
                                     contentDescription = stringResource(R.string.content_desc_select_date)
                                 )
                             }

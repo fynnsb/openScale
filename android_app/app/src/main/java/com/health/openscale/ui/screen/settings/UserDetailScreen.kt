@@ -39,6 +39,10 @@ import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.UnfoldMore
+import androidx.compose.material.icons.rounded.AddCircleOutline
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Save
+import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
@@ -323,7 +327,7 @@ fun UserDetailScreen(
             else context.getString(R.string.user_detail_add_user_title)
         )
         sharedViewModel.setTopBarAction(
-            TopBarAction(icon = Icons.Default.Save, onClick = {
+            TopBarAction(icon = Icons.Rounded.Save, onClick = {
                 if (!isEdit) {
                     addUser()
                 } else {
@@ -396,7 +400,7 @@ fun UserDetailScreen(
                         )
 
                         Icon(
-                            imageVector = Icons.Filled.UnfoldMore,
+                            imageVector = Icons.Rounded.UnfoldMore,
                             contentDescription = stringResource(R.string.user_detail_content_description_change_unit),
                             modifier = Modifier.size(18.dp),
                             tint = MaterialTheme.colorScheme.primary
@@ -486,7 +490,7 @@ fun UserDetailScreen(
                 singleLine = true,
                 trailingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Edit,
+                        imageVector = Icons.Rounded.Edit,
                         contentDescription = stringResource(R.string.amputation_correction_label)
                     )
                 }
@@ -531,7 +535,7 @@ fun UserDetailScreen(
                 readOnly = true,
                 trailingIcon = {
                     Icon(
-                        imageVector = Icons.Default.Edit,
+                        imageVector = Icons.Rounded.Edit,
                         contentDescription = stringResource(R.string.user_detail_label_birth_date)
                     )
                 }
@@ -569,7 +573,7 @@ fun UserDetailScreen(
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.Filled.AddCircleOutline,
+                            imageVector = Icons.Rounded.AddCircleOutline,
                             contentDescription = stringResource(R.string.action_add_measurement_desc),
                             tint = MaterialTheme.colorScheme.primary
                         )

@@ -46,6 +46,13 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.SupervisorAccount
 import androidx.compose.material.icons.outlined.CheckBox
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.CheckBox
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.FileDownload
+import androidx.compose.material.icons.rounded.SupervisorAccount
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -435,7 +442,7 @@ fun TableScreen(
 
             actions.add(
                 TopBarAction(
-                    icon = Icons.Filled.SupervisorAccount,
+                    icon = Icons.Rounded.SupervisorAccount,
                     contentDescriptionResId = R.string.desc_change_user,
                     onClick = {
                         val usersSelectable = allUsersForDialog.filter { it.id != 0 && it.id != sharedViewModel.selectedUser.value?.id }
@@ -450,7 +457,7 @@ fun TableScreen(
             )
             actions.add(
                 TopBarAction(
-                    icon = Icons.Filled.FileDownload,
+                    icon = Icons.Rounded.FileDownload,
                     contentDescriptionResId = R.string.desc_export_selected,
                     onClick = {
                         exportSelectedItems(selectedItemIds)
@@ -459,7 +466,7 @@ fun TableScreen(
             )
             actions.add(
                 TopBarAction(
-                    icon = Icons.Filled.Delete,
+                    icon = Icons.Rounded.Delete,
                     contentDescriptionResId = R.string.desc_delete_selected,
                     onClick = {
                         if (selectedItemIds.isNotEmpty()) {
@@ -471,7 +478,7 @@ fun TableScreen(
 
             actions.add(
                 TopBarAction(
-                    icon = Icons.Filled.Close,
+                    icon = Icons.Rounded.Close,
                     contentDescriptionResId = R.string.desc_cancel_selection_mode,
                     onClick = {
                         isInSelectionMode = false
@@ -489,7 +496,7 @@ fun TableScreen(
             if (!enrichedMeasurements.isEmpty()) {
                 defaultActions.add(
                     TopBarAction(
-                        icon = Icons.Outlined.CheckBox,
+                        icon = Icons.Rounded.CheckBox,
                         contentDescriptionResId = R.string.desc_enter_selection_mode,
                         onClick = { isInSelectionMode = true }
                     )
@@ -876,8 +883,8 @@ fun TableDataCellInternal(
                             horizontalArrangement = Arrangement.End
                         ) {
                             val trendIconVector = when (cellData.trend) {
-                                Trend.UP -> Icons.Filled.ArrowUpward
-                                Trend.DOWN -> Icons.Filled.ArrowDownward
+                                Trend.UP -> Icons.Rounded.ArrowUpward
+                                Trend.DOWN -> Icons.Rounded.ArrowDownward
                                 else -> null
                             }
                             val diffColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)

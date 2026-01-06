@@ -52,6 +52,12 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.rounded.Description
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Language
+import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.Vibration
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -218,7 +224,7 @@ fun GeneralSettingsScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Row(verticalAlignment = Alignment.Top) {
                         Icon(
-                            imageVector = Icons.Filled.Info,
+                            imageVector = Icons.Rounded.Info,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier
@@ -233,7 +239,7 @@ fun GeneralSettingsScreen(
 
                     Row(verticalAlignment = Alignment.Top) {
                         Icon(
-                            imageVector = Icons.Filled.Warning,
+                            imageVector = Icons.Rounded.Warning,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.error,
                             modifier = Modifier
@@ -316,7 +322,7 @@ fun GeneralSettingsScreen(
                     label = { Text(stringResource(id = R.string.settings_language_label)) },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Filled.Language,
+                            imageVector = Icons.Rounded.Language,
                             contentDescription = stringResource(id = R.string.settings_language_label)
                         )
                     },
@@ -358,7 +364,7 @@ fun GeneralSettingsScreen(
         SettingsGroup(
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.Vibration,
+                    imageVector = Icons.Rounded.Vibration,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -386,7 +392,7 @@ fun GeneralSettingsScreen(
         SettingsGroup(
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.Notifications,
+                    imageVector = Icons.Rounded.Notifications,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -536,7 +542,7 @@ fun GeneralSettingsScreen(
         SettingsGroup(
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Filled.Description,
+                    imageVector = Icons.Rounded.Description,
                     contentDescription = stringResource(R.string.file_logging_icon_content_description),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )

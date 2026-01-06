@@ -35,6 +35,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.rounded.ArrowDownward
+import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -398,9 +401,9 @@ fun StatisticCard(
 
                     // Determine icon and content description based on the difference value
                     val (diffIcon, description) = when {
-                        diffValue > 0 -> Icons.Filled.ArrowUpward to contentDescIncrease
-                        diffValue < 0 -> Icons.Filled.ArrowDownward to contentDescDecrease
-                        else -> Icons.Filled.Remove to contentDescNoChange
+                        diffValue > 0 -> Icons.Rounded.ArrowUpward to contentDescIncrease
+                        diffValue < 0 -> Icons.Rounded.ArrowDownward to contentDescDecrease
+                        else -> Icons.Rounded.Remove to contentDescNoChange
                     }
 
                     Row(

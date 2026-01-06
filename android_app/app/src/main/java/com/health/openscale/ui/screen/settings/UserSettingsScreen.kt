@@ -25,6 +25,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -99,7 +102,7 @@ fun UserSettingsScreen(
         sharedViewModel.setTopBarTitle(usersTitle) // "Users"
         sharedViewModel.setTopBarAction(
             TopBarAction(
-                icon = Icons.Default.Add,
+                icon = Icons.Rounded.Add,
                 onClick = {
                     onEditUser(null) // null indicates adding a new user
                 },
@@ -142,7 +145,7 @@ fun UserSettingsScreen(
                     Row {
                         IconButton(onClick = { onEditUser(user.id) }) {
                             Icon(
-                                Icons.Default.Edit,
+                                Icons.Rounded.Edit,
                                 contentDescription = editActionContentDescription // "Edit"
                             )
                         }
@@ -152,7 +155,7 @@ fun UserSettingsScreen(
                             }
                         ) {
                             Icon(
-                                Icons.Default.Delete,
+                                Icons.Rounded.Delete,
                                 contentDescription = deleteActionContentDescription
                             )
                         }
