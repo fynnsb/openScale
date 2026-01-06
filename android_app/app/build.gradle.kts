@@ -57,13 +57,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-
-        create("beta") {
-            initWith(getByName("debug"))
-            applicationIdSuffix = ".beta"
-            versionNameSuffix = "-beta"
-            manifestPlaceholders["appName"] = "openScale Redesigned Beta"
-        }
     }
 
     applicationVariants.all {
