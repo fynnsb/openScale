@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -175,7 +176,7 @@ fun StatisticsScreen(sharedViewModel: SharedViewModel) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 8.dp, vertical = 8.dp)
+                        .padding(horizontal = 8.dp)
                 ) {
                     items(relevantTypes, key = { it.id }) { type ->
                         val measurementsForType = remember(data, type) {
@@ -327,6 +328,7 @@ fun StatisticCard(
             //containerColor = Color(measurementType.color).copy(alpha = 0.08f)
             containerColor = MaterialTheme.colorScheme.surfaceContainer
         ),
+        shape = RoundedCornerShape(16.dp)
         //border = BorderStroke(
             //width = 1.dp,
             //color = Color(measurementType.color).copy(alpha = 0.2f)

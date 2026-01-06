@@ -1268,10 +1268,10 @@ private fun createLineSpec(
         // Points on the line are shown unless in statistics mode or for projections
         pointProvider = if (showPoints && !statisticsMode && !isProjection) {
             LineCartesianLayer.PointProvider.single(
-                LineCartesianLayer.point(ShapeComponent(fill(color.copy(alpha = 0.7f)), CorneredShape.Pill), 10.dp)
+                LineCartesianLayer.point(ShapeComponent(fill(color.copy(alpha = 0.7f)), CorneredShape.Pill), 6.dp)
             )
         } else null,
-        pointConnector = LineCartesianLayer.PointConnector.cubic(0.4f)
+        pointConnector = LineCartesianLayer.PointConnector.cubic(0.5f)
     )
 }
 

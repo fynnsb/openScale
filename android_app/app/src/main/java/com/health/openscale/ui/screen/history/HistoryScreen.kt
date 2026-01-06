@@ -94,6 +94,7 @@ import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowDownward
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -247,7 +248,7 @@ fun HistoryScreen(
                                 state = listState,
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                                    .padding(horizontal = 8.dp),
                                 verticalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
                                 itemsIndexed(
@@ -433,7 +434,7 @@ fun HistoryScreen(
             } else {
                 CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
             },
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            shape = RoundedCornerShape(16.dp)
         ) {
             Column {
                 // Header row: Date and action buttons (Edit, Delete, Expand/Collapse)

@@ -109,7 +109,7 @@ fun PeriodChart(
             }
 
             override fun getMaxY(minY: Double, maxY: Double, extraStore: ExtraStore): Double {
-                return maxY + 1
+                return ceil(maxY * 1.2)
             }
         }
     }
